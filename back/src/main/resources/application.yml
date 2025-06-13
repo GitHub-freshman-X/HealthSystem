@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/java_db_2
+    username: root
+    password: 050611@Xhr
+
+# 开启驼峰命名和下划线明明的自动转换
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
