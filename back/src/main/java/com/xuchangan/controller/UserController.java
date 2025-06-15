@@ -1,0 +1,63 @@
+package com.xuchangan.controller;
+
+import com.xuchangan.pojo.Result;
+import com.xuchangan.pojo.User;
+import com.xuchangan.service.UserService;
+import com.xuchangan.utils.Md5Util;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/user")
+public class UserController {
+
+    // 自动注入service层
+    @Autowired
+    private UserService userService;
+
+    // 注册
+    @PostMapping("/register")
+    public Result register(@RequestBody @Validated User user) {
+        // 通过用户名查找，因为用户名必须唯一
+        User u = userService.findByUsername(user.getUsername());
+        if(u != null){
+            return Result.error("用户名已被占用");
+        }
+
+        userService.register(user.getUsername(), user.getPassword());
+        return Result.success();
+    }
+
+    // 登录
+    @PostMapping("/login")
+    public Result login(@RequestBody @Validated User loginUser) {
+        User user = userService.findByUsername(loginUser.getUsername());
+        if(user == null){
+            return Result.error("用户名不存在");
+        }
+
+        String md5Password = user.getPassword();
+        String md5LoginPassword = Md5Util.getMD5String(loginUser.getPassword());
+        if(!md5Password.equals(md5LoginPassword)){
+            return Result.error("密码错误");
+        }
+        return Result.success("登录成功");
+    }
+
+
+    // -------------------------- 测试基本函数，不是对外接口 --------------------------
+    @PostMapping("/findByUsername")
+    public Result findByUsername(@RequestBody @Validated User user) {
+        // 通过用户名查找用户
+        User u = userService.findByUsername(user.getUsername());
+        if (u == null) {
+            return Result.error("用户不存在");
+        }
+        return Result.success();
+    }
+
+}
