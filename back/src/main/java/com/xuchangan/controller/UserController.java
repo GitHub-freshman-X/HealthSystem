@@ -3,13 +3,19 @@ package com.xuchangan.controller;
 import com.xuchangan.pojo.Result;
 import com.xuchangan.pojo.User;
 import com.xuchangan.service.UserService;
+import com.xuchangan.utils.JwtUtil;
 import com.xuchangan.utils.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/user")
@@ -18,6 +24,8 @@ public class UserController {
     // 自动注入service层
     @Autowired
     private UserService userService;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     // 注册
     @PostMapping("/register")
@@ -40,12 +48,24 @@ public class UserController {
             return Result.error("用户名不存在");
         }
 
+        // 密码加密
         String md5Password = user.getPassword();
         String md5LoginPassword = Md5Util.getMD5String(loginUser.getPassword());
         if(!md5Password.equals(md5LoginPassword)){
             return Result.error("密码错误");
         }
-        return Result.success("登录成功");
+
+        // 生成jwt令牌
+        HashMap<String, Object> claims = new HashMap<>();
+        claims.put("id", user.getUserId());
+        claims.put("username", user.getUsername());
+        String jwtToken = JwtUtil.genToken(claims);
+
+        // 将token存入到redis中
+        ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
+        operations.set(jwtToken, jwtToken, 1, TimeUnit.HOURS);
+
+        return Result.success(jwtToken);
     }
 
 
