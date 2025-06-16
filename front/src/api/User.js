@@ -21,9 +21,17 @@ const updateUserInfoService = (userInfo)=>{
   return request.put('/user/update', userInfo)
 }
 
+// 上传头像
+const uploadAvatarService = (avatarFile)=>{
+  const params = new URLSearchParams()
+  params.append('avatarUrl', avatarFile);
+  return request.patch('/user/uploadAvatar', params)
+}
+
 export {
   userLoginService,
   userRegisterService,
   getUserInfoService,
-  updateUserInfoService
+  updateUserInfoService,
+  uploadAvatarService
 }

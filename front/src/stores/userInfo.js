@@ -15,11 +15,17 @@ const useUserInfoStore = defineStore('userInfo', ()=>{
     userInfo.value = newUserInfo;
   }
 
-  // 4. 返回
+  // 4. 清除用户基本信息
+  const clearUserInfo = ()=>{
+    userInfo.value = {};
+  }
+
+  // 5. 返回
   return {
     userInfo,
     getUserInfo,
-    setUserInfo
+    setUserInfo,
+    clearUserInfo
   }
 
 },{

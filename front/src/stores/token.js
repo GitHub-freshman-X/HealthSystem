@@ -17,7 +17,7 @@ const useTokenStore = defineStore('token', ()=>{
   }
 
   // 4. 定义函数，清除token
-  const removeToken = () => {
+  const clearToken = () => {
     token.value = ''
   }
 
@@ -25,7 +25,7 @@ const useTokenStore = defineStore('token', ()=>{
     token,
     setToken,
     getToken,
-    removeToken
+    clearToken
   }
 }, {
   persist: true

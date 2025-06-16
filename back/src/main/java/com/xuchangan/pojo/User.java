@@ -30,6 +30,8 @@ public class User {
     private double height;
     private String familyRole;
 
+    private String avatarUrl;
+
     public interface Add {}
     public interface Update {}
 }

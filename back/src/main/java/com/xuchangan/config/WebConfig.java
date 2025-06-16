@@ -18,13 +18,14 @@ public class WebConfig implements WebMvcConfigurer {
         // 注册和登录不需要拦截
         registry.addInterceptor(loginInterceptor).excludePathPatterns(
                 "/user/login",
-                "/user/register"
+                "/user/register",
+                "/upload/**"
         );
     }
 
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/upload/**")
-//                .addResourceLocations("file:/D:/Java/Code/heima_SpringBoot_Vue/BigEvent/files/");
-//    }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/upload/**")
+                .addResourceLocations("file:/CurriculumDesign/java_db/files/");
+    }
 }

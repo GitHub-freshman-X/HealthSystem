@@ -17,4 +17,7 @@ public interface UserMapper {
 
     @Update("update user set real_name=#{realName}, gender=#{gender}, birth_date=#{birthDate}, height=#{height} where user_id=#{userId}")
     void update(User user);
+
+    @Update("update user set avatar_url=#{avatarUrl} where user_id=#{id}")
+    void uploadAvatar(Integer id, String avatarUrl);
 }

@@ -6,6 +6,7 @@ import com.xuchangan.service.UserService;
 import com.xuchangan.utils.JwtUtil;
 import com.xuchangan.utils.Md5Util;
 import com.xuchangan.utils.ThreadLocalUtil;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -80,6 +81,13 @@ public class UserController {
     @PutMapping("/update")
     public Result update(@RequestBody @Validated(User.Update.class) User user){
         userService.update(user);
+        return Result.success();
+    }
+
+    // 上传头像
+    @PatchMapping("/uploadAvatar")
+    public Result uploadAvatar(@RequestParam @URL String avatarUrl){
+        userService.uploadAvatar(avatarUrl);
         return Result.success();
     }
 

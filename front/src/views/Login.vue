@@ -116,10 +116,21 @@ const router = useRouter();
 import { useTokenStore } from '@/stores/token.js';
 const tokenStore = useTokenStore();
 
+import { getUserInfoService } from '@/api/User.js'
+import { useUserInfoStore } from '@/stores/userInfo'
+const userInfoStore = useUserInfoStore()
+// 获取用户信息
+const getUserInfo = async()=>{
+  let result = await getUserInfoService()
+  // 存储到pinia中
+  userInfoStore.setUserInfo(result.data)
+}
+
 const login = async()=>{
   let result = await userLoginService(loginData.value);
   // 登陆错误已经在request.js中处理了
   tokenStore.setToken(result.data)
+  getUserInfo();
   ElMessage.success('登录成功');
   router.push('/')
 }

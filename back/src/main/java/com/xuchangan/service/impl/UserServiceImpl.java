@@ -33,4 +33,11 @@ public class UserServiceImpl implements UserService {
     public void update(User user) {
         userMapper.update(user);
     }
+
+    @Override
+    public void uploadAvatar(String avatarUrl) {
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer id = (Integer) map.get("id");
+        userMapper.uploadAvatar(id, avatarUrl);
+    }
 }
