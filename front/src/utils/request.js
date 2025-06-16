@@ -6,7 +6,7 @@ import { ElMessage } from 'element-plus'
 //定义一个变量,记录公共的前缀  ,  baseURL
 const baseURL = '/api';
 const instance = axios.create({baseURL})
-// import { useTokenStore } from '@/stores/token';
+import { useTokenStore } from '@/stores/token';
 import router from '@/router/index.js';
 
 //添加响应拦截器
@@ -36,11 +36,11 @@ instance.interceptors.response.use(
 instance.interceptors.request.use(
   (config) => {
     // 请求前的回调
-    // const tokenStore = useTokenStore();
-    // if(tokenStore.getToken()){
+    const tokenStore = useTokenStore();
+    if(tokenStore.getToken()){
       // 如果有token,就设置请求头
-      // config.headers['Authorization'] = tokenStore.getToken();
-    // }
+      config.headers['Authorization'] = tokenStore.getToken();
+    }
     return config;
   },
   (err) => {

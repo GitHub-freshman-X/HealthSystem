@@ -11,7 +11,19 @@ const userRegisterService = (registerData) =>{
   return request.post('/user/register', registerData)
 }
 
+// 获取用户基本信息
+const getUserInfoService = ()=>{
+  return request.get('/user/info')
+}
+
+// 更新用户信息
+const updateUserInfoService = (userInfo)=>{
+  return request.put('/user/update', userInfo)
+}
+
 export {
   userLoginService,
-  userRegisterService
+  userRegisterService,
+  getUserInfoService,
+  updateUserInfoService
 }

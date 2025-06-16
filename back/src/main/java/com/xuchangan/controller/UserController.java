@@ -28,7 +28,7 @@ public class UserController {
 
     // 注册
     @PostMapping("/register")
-    public Result register(@RequestBody @Validated User user) {
+    public Result register(@RequestBody @Validated(User.Add.class) User user) {
         // 通过用户名查找，因为用户名必须唯一
         User u = userService.findByUsername(user.getUsername());
         if(u != null){
@@ -41,7 +41,7 @@ public class UserController {
 
     // 登录
     @PostMapping("/login")
-    public Result login(@RequestBody @Validated User loginUser) {
+    public Result login(@RequestBody @Validated(User.Add.class) User loginUser) {
         User user = userService.findByUsername(loginUser.getUsername());
         if(user == null){
             return Result.error("用户名不存在");
@@ -68,7 +68,7 @@ public class UserController {
     }
 
     // 获取个人信息
-    @GetMapping("/userInfo")
+    @GetMapping("/info")
     public Result getUserInfo() {
         Map<String, Object> map = ThreadLocalUtil.get();
         String username = (String) map.get("username");
@@ -78,7 +78,7 @@ public class UserController {
 
     // 修改个人基本信息
     @PutMapping("/update")
-    public Result update(@RequestBody @Validated User user){
+    public Result update(@RequestBody @Validated(User.Update.class) User user){
         userService.update(user);
         return Result.success();
     }
