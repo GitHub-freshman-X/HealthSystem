@@ -1,5 +1,6 @@
 package com.xuchangan.controller;
 
+import com.xuchangan.pojo.HealthAvg;
 import com.xuchangan.pojo.Result;
 import com.xuchangan.pojo.UserHealthView;
 import com.xuchangan.service.HealthService;
@@ -28,6 +29,13 @@ public class HealthController {
     public Result update(@RequestBody UserHealthView userHealthView){
         healthService.update(userHealthView);
         return Result.success();
+    }
+
+    // @RequestParam注解对应x-www-form-urlencoded格式的请求
+    @PostMapping("/avg")
+    public Result<HealthAvg> avg(@RequestParam String gender, @RequestParam Integer age){
+        HealthAvg healthAvg = healthService.avg(gender, age);
+        return Result.success(healthAvg);
     }
 
 }

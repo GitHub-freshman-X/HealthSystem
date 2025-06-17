@@ -1,6 +1,7 @@
 package com.xuchangan.service.impl;
 
 import com.xuchangan.mapper.HealthMapper;
+import com.xuchangan.pojo.HealthAvg;
 import com.xuchangan.pojo.UserHealthView;
 import com.xuchangan.service.HealthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,13 @@ public class HealthServiceImpl implements HealthService {
         // 向健康表中插入数据
         userHealthView.setRecordDate(LocalDate.now());
         healthMapper.insertHealth(userHealthView);
+    }
+
+    @Override
+    public HealthAvg avg(String gender, Integer age) {
+        Integer minAge = age - age % 10;
+        Integer maxAge = minAge + 9;
+        HealthAvg healthAvg = healthMapper.avg(gender, minAge, maxAge);
+        return healthAvg;
     }
 }

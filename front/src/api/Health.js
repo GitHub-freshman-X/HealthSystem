@@ -11,7 +11,16 @@ const updateHealthInfoService = (healthInfo)=>{
   return request.put('/health/update', healthInfo)
 }
 
+// 获取平均水平
+const getAvgHealthInfoService = (gender, age)=>{
+  const params = new URLSearchParams()
+  params.append('gender', gender);
+  params.append('age', age);
+  return request.post('/health/avg', params)
+}
+
 export {
   getHealthInfoService,
-  updateHealthInfoService
+  updateHealthInfoService,
+  getAvgHealthInfoService
 }

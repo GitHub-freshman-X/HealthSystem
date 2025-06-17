@@ -23,6 +23,12 @@
           <el-menu-item index="/health/show">
             <span>个人基本信息</span>
           </el-menu-item>
+
+          <!-- 个人信息可视化 -->
+          <el-menu-item index="/health/visualization">
+            <span>个人信息可视化</span>
+          </el-menu-item>
+
         </el-sub-menu>
 
         <!-- 营养素 -->

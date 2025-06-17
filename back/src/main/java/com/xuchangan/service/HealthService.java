@@ -1,5 +1,6 @@
 package com.xuchangan.service;
 
+import com.xuchangan.pojo.HealthAvg;
 import com.xuchangan.pojo.UserHealthView;
 
 public interface HealthService {
@@ -8,4 +9,7 @@ public interface HealthService {
 
     // 更新用户健康信息
     void update(UserHealthView userHealthView);
+
+    // 获取这个年龄阶段的平均值
+    HealthAvg avg(String gender, Integer age);
 }

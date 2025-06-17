@@ -8,6 +8,7 @@ import UserAvatar from '@/views/user/UserAvatar.vue'
 import UserResetPassword from '@/views/user/UserResetPassword.vue'
 import AllNutrient from '@/views/nutrient/AllNutrients.vue'
 import HealthShow from '@/views/health/HealthShow.vue';
+import HealthVisualization from '@/views/health/HealthVisualization.vue';
 
 // 定义路由关系
 const routes = [
@@ -29,7 +30,8 @@ const routes = [
       { path: 'nutrient/all', component: AllNutrient },
 
       // 个人健康
-      { path: 'health/show', component: HealthShow }
+      { path: 'health/show', component: HealthShow },
+      { path: 'health/visualization', component: HealthVisualization }
     ]
   }
 ]

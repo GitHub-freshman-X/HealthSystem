@@ -159,10 +159,13 @@ const rules = {
 
 import { getHealthInfoService, updateHealthInfoService } from '@/api/Health.js';
 import { ElMessage } from 'element-plus';
+import { useHealthInfoStore } from '@/stores/healthInfo';
+const healthInfoStore = useHealthInfoStore();
 // 获取健康信息
 const getHealthInfo = async()=>{
   let result = await getHealthInfoService();
   healthInfo.value = result.data;
+  healthInfoStore.setHealthInfo(result.data);
 }
 getHealthInfo()
 
