@@ -3,27 +3,73 @@
   <el-container class="layout-container">
     <!-- 左侧菜单栏 -->
     <el-aside width="200px">
-      <el-menu active-text-color="#ffd04b" background-color="#232323" text-color="#ffffff" router>
-        <!-- 暂时不知道还有啥 -->
+      <el-menu
+        active-text-color="#ffd04b"
+        background-color="#232323"
+        text-color="#ffffff"
+        unique-opened
+        router
+      >
         <el-menu-item>
-          <span>1</span>
+          <el-icon>
+            <UserFilled />
+          </el-icon>
+          <span>个人基本情况</span>
         </el-menu-item>
 
+        <!-- 营养素 -->
+        <el-sub-menu index="1">
+          <template #title>
+            <el-icon>
+              <Odometer />
+            </el-icon>
+            <span>营养素</span>
+          </template>
+
+          <el-menu-item index="/nutrient/all">
+            <span>所有营养素</span>
+          </el-menu-item>
+        </el-sub-menu>
+
+        <!-- 运动板块 -->
         <el-menu-item>
-          <span>2</span>
+          <el-icon>
+            <Flag />
+          </el-icon>
+          <span>运动</span>
         </el-menu-item>
 
+        <!-- 饮食日记板块 -->
         <el-menu-item>
-          <span>3</span>
+          <el-icon>
+            <Notebook />
+          </el-icon>
+          <span>饮食日记</span>
+        </el-menu-item>
+
+        <!-- 每日健康面板 -->
+        <el-menu-item>
+          <el-icon>
+            <PieChart />
+          </el-icon>
+          <span>每日健康</span>
+        </el-menu-item>
+
+        <!--  -->
+        <el-menu-item>
+          <el-icon>
+            <Food />
+          </el-icon>
+          <span>营养餐推荐</span>
         </el-menu-item>
 
         <!-- 个人信息管理 -->
-        <el-sub-menu>
+        <el-sub-menu index="2">
           <template #title>
             <el-icon>
               <UserFilled />
             </el-icon>
-            <span>个人中心</span>
+            <span>账号中心</span>
           </template>
 
           <el-menu-item index="/user/info">
@@ -98,7 +144,12 @@ import {
   Crop,
   EditPen,
   SwitchButton,
-  CaretBottom
+  CaretBottom,
+  Odometer,
+  Flag,
+  Notebook,
+  PieChart,
+  Food
 } from '@element-plus/icons-vue'
 import avatar from '@/assets/default.png'
 

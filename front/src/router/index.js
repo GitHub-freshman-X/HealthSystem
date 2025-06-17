@@ -6,6 +6,7 @@ import Layout from '@/views/Layout.vue'
 import UserInfo from '@/views/user/UserInfo.vue'
 import UserAvatar from '@/views/user/UserAvatar.vue'
 import UserResetPassword from '@/views/user/UserResetPassword.vue'
+import AllNutrient from '@/views/nutrient/AllNutrients.vue'
 
 // 定义路由关系
 const routes = [
@@ -15,12 +16,16 @@ const routes = [
   },
   {
     path: '/',
-    redirect: '/user/userInfo',
+    redirect: 'user/info',
     component: Layout,
     children: [
-      { path: '/user/info', component: UserInfo },
-      { path: '/user/avatar', component: UserAvatar },
-      { path: '/user/resetPassword', component: UserResetPassword }
+      // 用户
+      { path: 'user/info', component: UserInfo },
+      { path: 'user/avatar', component: UserAvatar },
+      { path: 'user/resetPassword', component: UserResetPassword },
+
+      // 营养素
+      { path: 'nutrient/all', component: AllNutrient },
     ]
   }
 ]
