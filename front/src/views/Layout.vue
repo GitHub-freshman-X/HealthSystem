@@ -10,12 +10,20 @@
         unique-opened
         router
       >
-        <el-menu-item>
-          <el-icon>
-            <UserFilled />
-          </el-icon>
-          <span>个人基本情况</span>
-        </el-menu-item>
+        <!-- 个人基本健康情况 -->
+        <el-sub-menu index="0">
+          <template #title>
+            <el-icon>
+              <UserFilled />
+            </el-icon>
+            <span>个人基本情况</span>
+          </template>
+
+          <!-- 个人信息展示 -->
+          <el-menu-item index="/health/show">
+            <span>个人基本信息</span>
+          </el-menu-item>
+        </el-sub-menu>
 
         <!-- 营养素 -->
         <el-sub-menu index="1">
