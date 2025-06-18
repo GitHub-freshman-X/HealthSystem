@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.xuchangan.mapper.ExerciseMapper;
 import com.xuchangan.pojo.ExerciseRecord;
 import com.xuchangan.pojo.PageBean;
+import com.xuchangan.pojo.Statistics;
 import com.xuchangan.service.ExerciseService;
 import com.xuchangan.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +63,13 @@ public class ExerciseServiceImpl implements ExerciseService {
 
         // 调用 Mapper 方法插入记录
         exerciseMapper.upload(record);
+    }
+
+    @Override
+    public Statistics getSumTime(LocalDate startDate, LocalDate endDate) {
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer userId = (Integer) map.get("id");
+        Statistics results = exerciseMapper.getSumTime(userId, startDate, endDate);
+        return results;
     }
 }

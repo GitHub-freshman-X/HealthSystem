@@ -3,6 +3,7 @@ package com.xuchangan.controller;
 import com.xuchangan.pojo.ExerciseRecord;
 import com.xuchangan.pojo.PageBean;
 import com.xuchangan.pojo.Result;
+import com.xuchangan.pojo.Statistics;
 import com.xuchangan.service.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,15 @@ public class ExerciseController {
     public Result upload(@RequestBody ExerciseRecord record){
         exerciseService.upload(record);
         return Result.success();
+    }
+
+    @PostMapping("/getSumTime")
+    public Result<Statistics> getSumTime(
+            @RequestParam(required = false) LocalDate startDate,
+            @RequestParam(required = false) LocalDate endDate
+    ){
+        Statistics result = exerciseService.getSumTime(startDate, endDate);
+        return Result.success(result);
     }
 
 }

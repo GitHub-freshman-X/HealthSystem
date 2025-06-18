@@ -2,6 +2,7 @@ package com.xuchangan.mapper;
 
 import com.xuchangan.pojo.HealthAvg;
 import com.xuchangan.pojo.HealthReport;
+import com.xuchangan.pojo.Statistics;
 import com.xuchangan.pojo.UserHealthView;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;

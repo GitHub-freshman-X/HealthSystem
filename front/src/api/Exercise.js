@@ -15,7 +15,16 @@ const uploadRecordService = (record)=>{
   return request.post('/exercise/upload', record)
 }
 
+const getSumTimeService = (params)=>{
+  const urlParams = new URLSearchParams()
+  for (const key in params) {
+    urlParams.append(key, params[key]);
+  }
+  return request.post('/exercise/getSumTime', urlParams)
+}
+
 export {
   getAllExerciseRecordsService,
-  uploadRecordService
+  uploadRecordService,
+  getSumTimeService
 }

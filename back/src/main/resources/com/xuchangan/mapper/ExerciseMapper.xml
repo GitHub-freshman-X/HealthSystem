@@ -21,4 +21,22 @@
         ORDER BY exercise_date DESC
     </select>
 
+    <!--  统计一段时间内。。。的总时间  -->
+    <select id="getSumTime" resultType="com.xuchangan.pojo.Statistics">
+        select
+        sum(duration) as durationSum,
+        sum(calorie_burned) as calorieBurnedSum,
+        sum(steps) as stepsSum
+        from exercise_record
+        <where>
+            user_id = #{userId}
+            <if test="startDate != null">
+                and exercise_date <![CDATA[ >= ]]> #{startDate}
+            </if>
+            <if test="endDate != null">
+                and exercise_date <![CDATA[ <= ]]> #{endDate}
+            </if>
+        </where>
+    </select>
+
 </mapper>

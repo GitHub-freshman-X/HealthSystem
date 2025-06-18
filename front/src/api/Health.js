@@ -43,5 +43,5 @@ export {
   updateHealthInfoService,
   getAvgHealthInfoService,
   getHealthReportsService,
-  uploadHealthReportService
+  uploadHealthReportService,
 }

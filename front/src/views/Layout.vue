@@ -62,6 +62,10 @@
           <el-menu-item index="/exercise/records">
             <span>运动记录</span>
           </el-menu-item>
+
+          <el-menu-item index="/exercise/sumTime">
+            <span>运动统计</span>
+          </el-menu-item>
         </el-sub-menu>
 
         <!-- 饮食日记板块 -->

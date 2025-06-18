@@ -1,9 +1,6 @@
 package com.xuchangan.service;
 
-import com.xuchangan.pojo.HealthAvg;
-import com.xuchangan.pojo.HealthReport;
-import com.xuchangan.pojo.PageBean;
-import com.xuchangan.pojo.UserHealthView;
+import com.xuchangan.pojo.*;
 
 import java.time.LocalDate;
 import java.util.List;
