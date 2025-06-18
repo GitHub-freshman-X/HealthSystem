@@ -51,12 +51,18 @@
         </el-sub-menu>
 
         <!-- 运动板块 -->
-        <el-menu-item>
-          <el-icon>
-            <Flag />
-          </el-icon>
-          <span>运动</span>
-        </el-menu-item>
+        <el-sub-menu index="2">
+          <template #title>
+            <el-icon>
+              <Flag />
+            </el-icon>
+            <span>运动板块</span>
+          </template>
+
+          <el-menu-item index="/exercise/records">
+            <span>运动记录</span>
+          </el-menu-item>
+        </el-sub-menu>
 
         <!-- 饮食日记板块 -->
         <el-menu-item>
@@ -74,7 +80,7 @@
           <span>每日健康</span>
         </el-menu-item>
 
-        <!--  -->
+        <!-- 推荐食物 -->
         <el-menu-item>
           <el-icon>
             <Food />
@@ -83,7 +89,7 @@
         </el-menu-item>
 
         <!-- 个人信息管理 -->
-        <el-sub-menu index="2">
+        <el-sub-menu index="6">
           <template #title>
             <el-icon>
               <UserFilled />

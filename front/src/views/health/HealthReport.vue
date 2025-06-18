@@ -11,7 +11,7 @@
     <!-- 展示报告 -->
     <el-table :data="reports" style="width: 100%">
       <el-table-column label="序号" width="100" type="index"></el-table-column>
-      <el-table-column label="名字" width="200">{{ userInfoStore.getUserInfo().realName }}</el-table-column>
+      <el-table-column label="名字" width="200" prop="realName"></el-table-column>
       <el-table-column label="记录时间" width="300" prop="recordTime"></el-table-column>
       <!-- 图片展示 -->
       <el-table-column label="报告" width="800">
@@ -76,7 +76,11 @@ import { getHealthReportsService } from '@/api/Health.js';
 const getHealthReports = async()=>{
   let result = await getHealthReportsService();
   reports.value = result.data;
-  console.log(reports.value);
+
+  // 给没一项加上名字属性
+  reports.value.forEach(item => {
+    item.realName = userInfoStore.getUserInfo().realName;
+  })
 }
 getHealthReports()
 
