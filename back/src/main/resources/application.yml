@@ -5,7 +5,14 @@ spring:
     username: root
     password: 050611@Xhr
 
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
 # 开启驼峰命名和下划线明明的自动转换
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+
+

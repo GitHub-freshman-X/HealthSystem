@@ -6,6 +6,10 @@
 
     <el-row>
       <el-col :span="12">
+
+        <!-- 图片展示组件 -->
+        <ImgShow :imgUrl="imgUrl" :width="256"></ImgShow>
+
         <!-- 下面组件会自动发送请求给后端 -->
         <!-- /api/upload 就是localhost:8080/upload -->
         <el-upload
@@ -18,8 +22,6 @@
           :headers="{ 'Authorization': tokenStore.getToken() }"
           :on-success="uploadSuccess"
           >
-          <img v-if="imgUrl" :src="imgUrl" class="avatar" />
-          <img v-else :src="avatar" width="278" />
         </el-upload>
 
         <br />
@@ -28,9 +30,8 @@
         <el-button type="primary" :icon="Plus" size="large" @click="uploadRef.$el.querySelector('input').click()">
           选择图片
         </el-button>
-
         <el-button type="success" :icon="Upload" size="large" @click="updateAvatar">
-            上传头像
+          上传头像
         </el-button>
 
       </el-col>
@@ -46,6 +47,7 @@ const tokenStore = useTokenStore();
 import { useUserInfoStore } from '@/stores/userInfo';
 const userInfoStore = useUserInfoStore();
 import { ref } from 'vue';
+import ImgShow from '@/views/img/ImgShow.vue';
 
 const uploadRef = ref(null)
 
@@ -81,9 +83,8 @@ const updateAvatar = async()=>{
 .avatar-uploader {
   :deep() {
     .avatar {
-      width: 278px;
-      height: 278px;
-      display: block;
+      max-height: 278px;
+      width: auto;
     }
 
     .el-upload {

@@ -85,10 +85,15 @@ showUserInfo();
 // 更新用户信息
 import { updateUserInfoService } from '@/api/User.js';
 import { ElMessage } from 'element-plus';
+import { useHealthInfoStore } from '@/stores/healthInfo';
+const healthInfoStore = useHealthInfoStore();
 const update = async()=>{
   let result = await updateUserInfoService(userInfo.value);
   ElMessage.success('用户信息更新成功');
   userInfoStore.setUserInfo(userInfo.value);
+  healthInfoStore.healthInfo.gender = userInfo.value.gender;
+  healthInfoStore.healthInfo.age = new Date().getFullYear() - new Date(userInfo.value.birthDate).getFullYear();
+  healthInfoStore.healthInfo.height = userInfo.value.height;
 }
 
 </script>

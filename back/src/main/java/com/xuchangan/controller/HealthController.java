@@ -1,6 +1,7 @@
 package com.xuchangan.controller;
 
 import com.xuchangan.pojo.HealthAvg;
+import com.xuchangan.pojo.HealthReport;
 import com.xuchangan.pojo.Result;
 import com.xuchangan.pojo.UserHealthView;
 import com.xuchangan.service.HealthService;
@@ -8,6 +9,7 @@ import com.xuchangan.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -36,6 +38,20 @@ public class HealthController {
     public Result<HealthAvg> avg(@RequestParam String gender, @RequestParam Integer age){
         HealthAvg healthAvg = healthService.avg(gender, age);
         return Result.success(healthAvg);
+    }
+
+    // 获取当前用户所有健康报告
+    @GetMapping("/getReports")
+    public Result<List<HealthReport>> getReports(){
+        List<HealthReport> result = healthService.getReports();
+        return Result.success(result);
+    }
+
+    // 上传报告
+    @PostMapping("/uploadReport")
+    public Result uploadReport(@RequestParam String realName, @RequestParam String imgUrl){
+        healthService.uploadReport(realName, imgUrl);
+        return Result.success();
     }
 
 }

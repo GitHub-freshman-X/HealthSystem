@@ -10,15 +10,15 @@
     <el-row>
       <el-col :span="12">
         <el-form :model="healthInfo" label-width="120px" size="large" :rules="rules">
-          <el-form-item label="真实姓名" prop="realName">
+          <el-form-item label="真实姓名">
             <el-input v-model="healthInfo.realName" readonly />
           </el-form-item>
 
-          <el-form-item label="性别" prop="gender">
+          <el-form-item label="性别">
             <el-input v-model="healthInfo.gender" readonly />
           </el-form-item>
 
-          <el-form-item label="年龄" prop="age">
+          <el-form-item label="年龄">
             <el-input v-model="healthInfo.age" readonly />
           </el-form-item>
 
@@ -52,7 +52,7 @@
             </el-input>
           </el-form-item>
 
-          <el-form-item label="体脂率" prop="bodyFatRate">
+          <el-form-item label="体脂率">
             <el-input v-model="healthInfo.bodyFatRate" readonly>
               <template #suffix>%</template>
             </el-input>
@@ -74,7 +74,7 @@
             <el-input v-model="healthInfo.visceralFat" type="number" />
           </el-form-item>
 
-          <el-form-item label="BMI" prop="bmi">
+          <el-form-item label="BMI">
             <el-input v-model="healthInfo.bmi" readonly />
           </el-form-item>
 
@@ -116,15 +116,6 @@ const rules = {
   recordDate: [
     { required: true, message: '请选择记录日期', trigger: 'change' }
   ],
-  realName: [
-    { required: true, message: '请输入姓名', trigger: 'blur'}
-  ],
-  gender: [
-    { required: true, message: '请选择性别', trigger: 'change' }
-  ],
-  age: [
-    { required: true, message: '请输入年龄', trigger: 'blur' }
-  ],
   height: [
     { required: true, message: '请输入身高', trigger: 'blur' }
   ],
@@ -148,12 +139,6 @@ const rules = {
   ],
   visceralFat: [
     { required: true, message: '请输入内脏脂肪等级', trigger: 'blur' }
-  ],
-  bodyFatRate: [
-    { required: true, message: '请输入体脂率', trigger: 'blur' }
-  ],
-  bmi: [
-    { required: true, message: '请输入BMI', trigger: 'blur' }
   ]
 }
 
@@ -161,11 +146,19 @@ import { getHealthInfoService, updateHealthInfoService } from '@/api/Health.js';
 import { ElMessage } from 'element-plus';
 import { useHealthInfoStore } from '@/stores/healthInfo';
 const healthInfoStore = useHealthInfoStore();
+import { useUserInfoStore } from '@/stores/userInfo';
+const userInfoStore = useUserInfoStore();
 // 获取健康信息
 const getHealthInfo = async()=>{
   let result = await getHealthInfoService();
-  healthInfo.value = result.data;
-  healthInfoStore.setHealthInfo(result.data);
+  if(result.data){
+    healthInfo.value = result.data;
+  }
+  const userInfo = userInfoStore.getUserInfo();
+  healthInfo.value.realName = userInfo.realName;
+  healthInfo.value.gender = userInfo.gender;
+  healthInfo.value.age = new Date().getFullYear() - new Date(userInfo.birthDate).getFullYear()
+  healthInfoStore.setHealthInfo(healthInfo.value);
 }
 getHealthInfo()
 

@@ -19,8 +19,24 @@ const getAvgHealthInfoService = (gender, age)=>{
   return request.post('/health/avg', params)
 }
 
+// 获取健康报告
+const getHealthReportsService = ()=>{
+  return request.get('/health/getReports')
+}
+
+// 上传报告
+const uploadHealthReportService = (reportData)=>{
+  const params = new URLSearchParams()
+  for (const key in reportData) {
+    params.append(key, reportData[key]);
+  }
+  return request.post('/health/uploadReport', params)
+}
+
 export {
   getHealthInfoService,
   updateHealthInfoService,
-  getAvgHealthInfoService
+  getAvgHealthInfoService,
+  getHealthReportsService,
+  uploadHealthReportService
 }

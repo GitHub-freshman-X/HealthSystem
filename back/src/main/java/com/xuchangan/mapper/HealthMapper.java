@@ -1,6 +1,7 @@
 package com.xuchangan.mapper;
 
 import com.xuchangan.pojo.HealthAvg;
+import com.xuchangan.pojo.HealthReport;
 import com.xuchangan.pojo.UserHealthView;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -23,4 +24,13 @@ public interface HealthMapper {
 
     @Select("select * from health_avg where gender=#{gender} and age_min=#{minAge} and age_max=#{maxAge}")
     HealthAvg avg(String gender, Integer minAge, Integer maxAge);
+
+    @Select("select * from health_report where user_id=#{userId}")
+    List<HealthReport> getReports(Integer userId);
+
+    @Select("select user_id from user where real_name=#{realName}")
+    Integer getUserIdByName(String realName);
+
+    @Insert("insert into health_report(user_id, record_time, img_url) values(#{userId}, #{recordTime}, #{imgUrl})")
+    void uploadReport(HealthReport healthReport);
 }

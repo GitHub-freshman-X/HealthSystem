@@ -29,6 +29,11 @@
             <span>个人信息可视化</span>
           </el-menu-item>
 
+          <!-- 个人体检报告 -->
+          <el-menu-item index="/health/report">
+            <span>个人体检报告</span>
+          </el-menu-item>
+
         </el-sub-menu>
 
         <!-- 营养素 -->

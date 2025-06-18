@@ -9,6 +9,7 @@ import UserResetPassword from '@/views/user/UserResetPassword.vue'
 import AllNutrient from '@/views/nutrient/AllNutrients.vue'
 import HealthShow from '@/views/health/HealthShow.vue';
 import HealthVisualization from '@/views/health/HealthVisualization.vue';
+import HealthReport from '@/views/health/HealthReport.vue';
 
 // 定义路由关系
 const routes = [
@@ -31,7 +32,8 @@ const routes = [
 
       // 个人健康
       { path: 'health/show', component: HealthShow },
-      { path: 'health/visualization', component: HealthVisualization }
+      { path: 'health/visualization', component: HealthVisualization },
+      { path: 'health/report', component: HealthReport }
     ]
   }
 ]

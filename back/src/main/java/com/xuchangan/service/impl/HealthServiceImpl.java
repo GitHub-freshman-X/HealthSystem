@@ -2,13 +2,18 @@ package com.xuchangan.service.impl;
 
 import com.xuchangan.mapper.HealthMapper;
 import com.xuchangan.pojo.HealthAvg;
+import com.xuchangan.pojo.HealthReport;
 import com.xuchangan.pojo.UserHealthView;
 import com.xuchangan.service.HealthService;
+import com.xuchangan.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class HealthServiceImpl implements HealthService {
@@ -19,6 +24,9 @@ public class HealthServiceImpl implements HealthService {
     @Override
     public UserHealthView info(Integer userId) {
         List<UserHealthView> result = healthMapper.info(userId);
+        if(result == null || result.isEmpty()) {
+            return null; // 如果没有健康信息，返回null
+        }
         return result.get(result.size()-1);
     }
 
@@ -38,5 +46,29 @@ public class HealthServiceImpl implements HealthService {
         Integer maxAge = minAge + 9;
         HealthAvg healthAvg = healthMapper.avg(gender, minAge, maxAge);
         return healthAvg;
+    }
+
+    @Override
+    public List<HealthReport> getReports() {
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer userId = (Integer) map.get("id");
+        List<HealthReport> result = healthMapper.getReports(userId);
+        Collections.reverse(result);
+        return result;
+    }
+
+    @Override
+    public void uploadReport(String realName, String imgUrl) {
+        // 根据名字查找userId
+        Integer userId = healthMapper.getUserIdByName(realName);
+
+        // 构建 HealthReport 对象
+        HealthReport healthReport = new HealthReport();
+        healthReport.setUserId(userId);
+        healthReport.setRecordTime(LocalDateTime.now());
+        healthReport.setImgUrl(imgUrl);
+
+        // 调用mapper
+        healthMapper.uploadReport(healthReport);
     }
 }

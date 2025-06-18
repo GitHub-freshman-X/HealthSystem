@@ -74,7 +74,18 @@ const getAvgHealthInfo= async()=>{
   ]
   console.log(avgData.value)
 }
-getAvgHealthInfo();
+
+import { onMounted, onUnmounted } from 'vue'
+
+// 页面加载时调用
+onMounted(() => {
+  getAvgHealthInfo()
+})
+
+// 页面卸载时清除数据
+onUnmounted(() => {
+  avgData.value = []
+})
 
 // 图标的关键
 const option = computed(() => ({
