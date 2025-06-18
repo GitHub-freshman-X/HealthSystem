@@ -20,7 +20,13 @@
 
         <el-col :span="4">
           <el-form-item label="运动类型">
-            <el-select v-model="filterForm.exerciseType" placeholder="请选择类型" clearable style="width: 100%">
+            <el-select 
+            v-model="filterForm.exerciseType" 
+            placeholder="请选择类型" 
+            clearable 
+            style="width: 100%"
+            @clear="filterForm.exerciseType = ''"
+            >
               <el-option label="跑步" value="跑步" />
               <el-option label="骑行" value="骑行" />
               <el-option label="游泳" value="游泳" />
@@ -73,7 +79,7 @@
       @current-change="onCurrentChange" style="margin-top: 20px; justify-content: flex-end" />
 
     <!-- 弹框，新建运动记录 -->
-    <el-dialog v-model="dialogVisible" title="记录运动" width="30%">
+    <el-dialog v-model="dialogVisible" title="记录运动" width="30%" @close="clearRecordModel">
       <el-form :model="recordModel" :rules="rules" label-width="100px" style="padding-right: 30px">
         <el-form-item label="名字">
           <el-input v-model="recordModel.realName" readonly></el-input>
@@ -258,6 +264,17 @@ const uploadRecord = async()=>{
   dialogVisible.value = false
   getAllExerciseRecords()
   ElMessage.success('运动记录上传成功')
+}
+
+const clearRecordModel = ()=> {
+  recordModel.value = {
+    realName: userInfoStore.getUserInfo().realName,
+    exerciseDate: '',
+    exerciseType: '',
+    duration: null,
+    calorieBurned: null,
+    steps: null
+  }
 }
 
 </script>
