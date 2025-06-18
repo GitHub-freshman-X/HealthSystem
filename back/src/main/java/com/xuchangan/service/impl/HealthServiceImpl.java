@@ -1,8 +1,11 @@
 package com.xuchangan.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xuchangan.mapper.HealthMapper;
 import com.xuchangan.pojo.HealthAvg;
 import com.xuchangan.pojo.HealthReport;
+import com.xuchangan.pojo.PageBean;
 import com.xuchangan.pojo.UserHealthView;
 import com.xuchangan.service.HealthService;
 import com.xuchangan.utils.ThreadLocalUtil;
@@ -49,12 +52,20 @@ public class HealthServiceImpl implements HealthService {
     }
 
     @Override
-    public List<HealthReport> getReports() {
+    public PageBean<HealthReport> getReports(Integer pageNum, Integer pageSize, LocalDate recordDate) {
+        PageBean<HealthReport> pb = new PageBean<>();
+
+        PageHelper.startPage(pageNum, pageSize);
+
         Map<String, Object> map = ThreadLocalUtil.get();
         Integer userId = (Integer) map.get("id");
-        List<HealthReport> result = healthMapper.getReports(userId);
-        Collections.reverse(result);
-        return result;
+        List<HealthReport> result = healthMapper.getReports(userId, recordDate);
+
+        PageInfo<HealthReport> pageInfo = new PageInfo<>(result);
+        pb.setTotal(pageInfo.getTotal());
+        pb.setItems(pageInfo.getList());
+
+        return pb;
     }
 
     @Override

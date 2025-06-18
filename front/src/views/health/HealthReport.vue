@@ -8,6 +8,18 @@
       </div>
     </template>
 
+    <!-- 条件查询 -->
+    <el-form label-width="100px" size="small" class="filter-form" inline>
+
+      <el-form-item label="时间">
+        <el-date-picker v-model="recordDate" type="date" placeholder="请选择要查询的时间" />
+      </el-form-item>
+
+      <el-form-item>
+        <el-button type="primary" @click="getHealthReports">查询</el-button>
+      </el-form-item>
+    </el-form>
+
     <!-- 展示报告 -->
     <el-table :data="reports" style="width: 100%">
       <el-table-column label="序号" width="100" type="index"></el-table-column>
@@ -25,11 +37,16 @@
       </template>
     </el-table>
 
+    <!-- 分页条 -->
+    <el-pagination v-model:current-page="pageNum" v-model:page-size="pageSize" :page-sizes="[3, 5, 10, 20]"
+      layout="jumper, total, sizes, prev, pager, next" background :total="total" @size-change="onSizeChange"
+      @current-change="onCurrentChange" style="margin-top: 20px; justify-content: flex-end" />
+
     <!-- 上传报告 -->
     <el-dialog v-model="dialogVisible" title="上传报告" width="30%" @close="clearReportModel">
       <el-form :model="reportModel" :rules="rules" label-width="100px" style="padding-right: 30px">
-        <el-form-item label="姓名" prop="realName">
-          <el-input v-model="reportModel.realName"></el-input>
+        <el-form-item label="姓名">
+          <el-input v-model="reportModel.realName" readonly></el-input>
         </el-form-item>
 
         <el-form-item label="报告图片" prop="imgUrl">
@@ -65,17 +82,44 @@ import ImgShow from '@/views/img/ImgShow.vue';
 import { useUserInfoStore } from '@/stores/userInfo';
 const userInfoStore = useUserInfoStore();
 import { Plus } from '@element-plus/icons-vue';
+import dayjs from 'dayjs'
 
 import { useTokenStore } from '@/stores/token';
 const tokenStore = useTokenStore();
 
 const reports = ref([])
 
+//分页条数据模型
+const pageNum = ref(1)//当前页
+const total = ref(20)//总条数
+const pageSize = ref(10)//每页条数
+
+//当每页条数发生了变化，调用此函数
+const onSizeChange = (size) => {
+  pageSize.value = size
+  getHealthReports();
+}
+//当前页码发生变化，调用此函数
+const onCurrentChange = (num) => {
+  pageNum.value = num
+  getHealthReports();
+}
+
+const recordDate = ref('')
 // 获取报告数据
 import { getHealthReportsService } from '@/api/Health.js';
 const getHealthReports = async()=>{
-  let result = await getHealthReportsService();
-  reports.value = result.data;
+  let params = {
+    pageNum: pageNum.value,
+    pageSize: pageSize.value,
+  }
+  if(recordDate.value) {
+    params.recordDate = dayjs(recordDate.value).format('YYYY-MM-DD')
+  }
+  console.log('getHealthReports', params.recordDate)
+  let result = await getHealthReportsService(params);
+  reports.value = result.data.items
+  total.value = result.data.total;
 
   // 给没一项加上名字属性
   reports.value.forEach(item => {
@@ -86,12 +130,11 @@ getHealthReports()
 
 const dialogVisible = ref(false)
 const reportModel = ref({
-  realName: '',
+  realName: userInfoStore.getUserInfo().realName,
   imgUrl: ''
 })
 
 const rules = {
-  realName: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
   imgUrl: [{ required: true, message: '请上传报告图片', trigger: 'change' }]
 }
 
@@ -160,5 +203,9 @@ const clearReportModel = ()=>{
       text-align: center;
     }
   }
+}
+
+.filter-form {
+  margin-bottom: 20px;
 }
 </style>

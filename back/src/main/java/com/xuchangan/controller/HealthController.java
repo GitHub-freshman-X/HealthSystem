@@ -1,14 +1,12 @@
 package com.xuchangan.controller;
 
-import com.xuchangan.pojo.HealthAvg;
-import com.xuchangan.pojo.HealthReport;
-import com.xuchangan.pojo.Result;
-import com.xuchangan.pojo.UserHealthView;
+import com.xuchangan.pojo.*;
 import com.xuchangan.service.HealthService;
 import com.xuchangan.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -41,9 +39,14 @@ public class HealthController {
     }
 
     // 获取当前用户所有健康报告
-    @GetMapping("/getReports")
-    public Result<List<HealthReport>> getReports(){
-        List<HealthReport> result = healthService.getReports();
+    // 优化：分页查询 + 条件查询
+    @PostMapping("/getReports")
+    public Result<PageBean<HealthReport>> getReports(
+            Integer pageNum,
+            Integer pageSize,
+            @RequestParam(required = false)LocalDate recordDate
+            ){
+        PageBean<HealthReport> result = healthService.getReports(pageNum, pageSize, recordDate);
         return Result.success(result);
     }
 

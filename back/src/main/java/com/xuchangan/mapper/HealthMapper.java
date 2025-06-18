@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Mapper
@@ -25,8 +26,7 @@ public interface HealthMapper {
     @Select("select * from health_avg where gender=#{gender} and age_min=#{minAge} and age_max=#{maxAge}")
     HealthAvg avg(String gender, Integer minAge, Integer maxAge);
 
-    @Select("select * from health_report where user_id=#{userId}")
-    List<HealthReport> getReports(Integer userId);
+    List<HealthReport> getReports(Integer userId, LocalDate recordDate);
 
     @Select("select user_id from user where real_name=#{realName}")
     Integer getUserIdByName(String realName);

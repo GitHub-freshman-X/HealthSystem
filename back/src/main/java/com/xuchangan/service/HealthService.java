@@ -2,8 +2,10 @@ package com.xuchangan.service;
 
 import com.xuchangan.pojo.HealthAvg;
 import com.xuchangan.pojo.HealthReport;
+import com.xuchangan.pojo.PageBean;
 import com.xuchangan.pojo.UserHealthView;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface HealthService {
@@ -16,7 +18,7 @@ public interface HealthService {
     // 获取这个年龄阶段的平均值
     HealthAvg avg(String gender, Integer age);
 
-    List<HealthReport> getReports();
+    PageBean<HealthReport> getReports(Integer pageNum, Integer pageSize, LocalDate recordDate);
 
     // 上传报告
     void uploadReport(String realName, String imgUrl);

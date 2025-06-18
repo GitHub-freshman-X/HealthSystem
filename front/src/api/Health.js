@@ -20,8 +20,13 @@ const getAvgHealthInfoService = (gender, age)=>{
 }
 
 // 获取健康报告
-const getHealthReportsService = ()=>{
-  return request.get('/health/getReports')
+const getHealthReportsService = (params)=>{
+  let urlParams = new URLSearchParams()
+  for (const key in params) {
+    urlParams.append(key, params[key]);
+  }
+  console.log('getHealthReportsService', urlParams.toString())
+  return request.post('/health/getReports', urlParams)
 }
 
 // 上传报告
