@@ -1,9 +1,11 @@
 package com.xuchangan.service;
 
 import com.xuchangan.pojo.DietFoodList;
+import com.xuchangan.pojo.PageBean;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface DietService {
-    List<DietFoodList> getDietFoods();
+    PageBean<DietFoodList> getDietFoods(Integer pageNum, Integer pageSize, LocalDate dietDate, String mealType);
 }

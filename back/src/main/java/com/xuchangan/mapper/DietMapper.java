@@ -1,13 +1,16 @@
 package com.xuchangan.mapper;
 
+import com.xuchangan.pojo.Diet;
 import com.xuchangan.pojo.DietFoodView;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Mapper
 public interface DietMapper {
-    @Select("select * from diet_food_view where user_id=#{userId}")
-    List<DietFoodView> getDietFoods(Integer userId);
+    List<DietFoodView> getDietFoods(Integer userId, LocalDate dietDate, String mealType);
+
+    List<Diet> getDistinctMeals(Integer userId, LocalDate dietDate, String mealType);
 }
