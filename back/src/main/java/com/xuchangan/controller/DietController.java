@@ -29,5 +29,12 @@ public class DietController {
         return Result.success(result);
     }
 
+    // 上传
+    @PostMapping("/uploadDietFoods")
+    public Result uploadDietFoods(@RequestBody DietFoodList dietFoodList){
+        dietService.uploadDietFoods(dietFoodList);
+        return Result.success();
+    }
+
 
 }

@@ -56,11 +56,47 @@ public class DietServiceImpl implements DietService {
             resultList.add(group);
         }
 
+        PageInfo<Diet> piView = new PageInfo<>(mealKeys);
+        pb.setTotal(piView.getTotal());
         PageInfo<DietFoodList> pageInfo = new PageInfo<>(resultList);
-        pb.setTotal(pageInfo.getTotal());
         pb.setItems(pageInfo.getList());
 
         return pb;
 
     }
+
+    @Override
+    public void uploadDietFoods(DietFoodList dietFoodList) {
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer userId = (Integer) map.get("id");
+
+        // 插入到diet表中
+        dietMapper.insertIntoDiet(userId, dietFoodList.getDietDate(), dietFoodList.getMealType());
+
+        // 将dietFoodList转换为DietFoodView列表
+        List<DietFoodView> views = new ArrayList<>();
+
+        List<String> foodList = dietFoodList.getFoodList();
+        List<Double> quantityList = dietFoodList.getQuantityList();
+
+        for(int i=0; i<foodList.size(); ++i){
+            DietFoodView view = new DietFoodView();
+            view.setDietDate(dietFoodList.getDietDate());
+            view.setMealType(dietFoodList.getMealType());
+
+            view.setFoodName(foodList.get(i));
+            view.setQuantity(quantityList.get(i));
+
+            views.add(view);
+        }
+
+        Integer dietId = dietMapper.getDietCount(); // 获取最新插入的diet的ID
+        for(DietFoodView view : views){
+            Integer foodId = dietMapper.getFoodIdByName(view.getFoodName());
+            dietMapper.insertIntoDietFood(dietId, foodId, view.getQuantity());
+        }
+    }
 }
+
+
+

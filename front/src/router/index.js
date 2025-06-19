@@ -32,7 +32,7 @@ const routes = [
   },
   {
     path: '/',
-    redirect: 'user/info',
+    redirect: 'health/visualization',
     component: Layout,
     children: [
       // 用户

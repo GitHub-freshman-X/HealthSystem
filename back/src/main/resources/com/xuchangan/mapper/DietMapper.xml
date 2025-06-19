@@ -25,6 +25,7 @@
         ORDER BY diet_date DESC
     </select>
 
+    <!--  数据库中有user_id、diet_date、meal_type联合索引  -->
     <select id="getDistinctMeals" resultType="com.xuchangan.pojo.Diet">
         SELECT DISTINCT diet_date, meal_type
         FROM diet_food_view
@@ -32,7 +33,7 @@
         <if test="dietDate != null">
             AND diet_date = #{dietDate}
         </if>
-        <if test="mealType != null">
+        <if test="mealType != null and mealType != ''">
             AND meal_type = #{mealType}
         </if>
         ORDER BY diet_date DESC, FIELD(meal_type, '加餐', '晚餐', '午餐', '早餐')
