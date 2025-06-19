@@ -69,12 +69,19 @@
         </el-sub-menu>
 
         <!-- 饮食日记板块 -->
-        <el-menu-item>
-          <el-icon>
-            <Notebook />
-          </el-icon>
-          <span>饮食日记</span>
-        </el-menu-item>
+        <el-sub-menu index="3">
+          <template #title>
+            <el-icon>
+              <Notebook />
+            </el-icon>
+            <span>饮食运动日记</span>
+          </template>
+          
+          <el-menu-item index="/diet/diary">
+            <span>饮食录入</span>
+          </el-menu-item>
+
+        </el-sub-menu>
 
         <!-- 每日健康面板 -->
         <el-menu-item>
