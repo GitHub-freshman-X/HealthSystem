@@ -66,4 +66,17 @@ public class DietController {
         return Result.success(result);
     }
 
+    // 获取该年龄阶段各营养素推荐值
+    @PostMapping("/nutrientSufficient")
+    public Result<List<NutrientSufficient>> getNutrientSufficient(
+            @RequestParam String gender,
+            @RequestParam Integer age,
+            @RequestParam LocalDate dietDate,
+            @RequestParam String pregnancy,
+            @RequestParam String lactation
+    ){
+        List<NutrientSufficient> result = dietService.getNutrientSufficient(gender, age, dietDate, pregnancy, lactation);
+        return Result.success(result);
+    }
+
 }

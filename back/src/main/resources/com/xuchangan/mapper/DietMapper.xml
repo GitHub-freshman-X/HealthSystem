@@ -74,4 +74,34 @@
         fnv.nutrient_name
     </select>
 
+    <select id="getNutrientSufficient" resultType="com.xuchangan.pojo.NutrientSufficient">
+        SELECT
+            dfv.real_name,
+            dfv.diet_date,
+            fnv.nutrient_name,
+            ROUND(SUM(dfv.quantity / 100.0 * fnv.amount), 2) AS intake_amount,
+            ns.recommend_amount,
+            ns.unit,
+            CASE
+                WHEN ROUND(SUM(dfv.quantity / 100.0 * fnv.amount), 2) >= ns.recommend_amount THEN '是'
+                ELSE '否'
+                END AS is_sufficient
+        FROM diet_food_view dfv
+                 JOIN food_nutrient_view fnv ON dfv.food_name = fnv.food_name
+                 JOIN nutrient_standard ns ON ns.nutrient_id = fnv.nutrient_id
+        WHERE
+            ns.gender = #{gender}
+          AND #{age} BETWEEN ns.age_min AND ns.age_max
+          AND dfv.diet_date = #{dietDate}
+          AND ns.pregnancy = #{pregnancy}
+          AND ns.lactation = #{lactation}
+        GROUP BY
+            dfv.real_name,
+            dfv.diet_date,
+            fnv.nutrient_name,
+            ns.recommend_amount,
+            ns.unit
+    </select>
+
+
 </mapper>

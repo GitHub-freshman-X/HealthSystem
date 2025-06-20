@@ -89,6 +89,10 @@
             <span>营养素摄入</span>
           </el-menu-item>
 
+          <el-menu-item index="/diet/nutrientSufficient">
+            <span>营养是否充足</span>
+          </el-menu-item>
+
         </el-sub-menu>
 
         <!-- 每日健康面板 -->

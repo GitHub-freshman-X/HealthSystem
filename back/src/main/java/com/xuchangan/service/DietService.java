@@ -1,9 +1,6 @@
 package com.xuchangan.service;
 
-import com.xuchangan.pojo.DietExerciseDiary;
-import com.xuchangan.pojo.DietFoodList;
-import com.xuchangan.pojo.DietNutrientIntake;
-import com.xuchangan.pojo.PageBean;
+import com.xuchangan.pojo.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,4 +15,6 @@ public interface DietService {
     void uploadDiary(DietExerciseDiary dietExerciseDiary);
 
     PageBean<DietNutrientIntake> getDietNutrientIntake(Integer pageNum, Integer pageSize, LocalDate dietDate, String mealType);
+
+    List<NutrientSufficient> getNutrientSufficient(String gender, Integer age, LocalDate dietDate, String pregnancy, String lactation);
 }

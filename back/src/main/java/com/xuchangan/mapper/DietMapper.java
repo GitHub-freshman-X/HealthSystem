@@ -37,4 +37,6 @@ public interface DietMapper {
     void uploadDiary(DietExerciseDiary dietExerciseDiary);
 
     List<DietNutrientIntake> getDietNutrientIntake(Integer userId, LocalDate dietDate, String mealType);
+
+    List<NutrientSufficient> getNutrientSufficient(String gender, Integer age, LocalDate dietDate, String pregnancy, String lactation);
 }

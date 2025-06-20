@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class NutrientStandard {
     private int standardId;
     private int nutrientId;
+    private String nutrientName;
     private String gender;
     private int ageMin;
     private int ageMax;

@@ -137,6 +137,12 @@ public class DietServiceImpl implements DietService {
         pb.setItems(pageInfo.getList());
         return pb;
     }
+
+    @Override
+    public List<NutrientSufficient> getNutrientSufficient(String gender, Integer age, LocalDate dietDate, String pregnancy, String lactation) {
+        List<NutrientSufficient> standardList = dietMapper.getNutrientSufficient(gender, age, dietDate, pregnancy, lactation);
+        return standardList;
+    }
 }
 
 

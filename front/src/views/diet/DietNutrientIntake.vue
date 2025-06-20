@@ -39,8 +39,6 @@
       <el-table-column label="餐次" width="200" prop="mealType" />
       <el-table-column label="营养素" width="200" prop="nutrientName" />
       <el-table-column label="摄入量" width="200" prop="intakeAmount" />
-      <el-table-column label="标准量" width="200" />
-      <el-table-column label="是否充足" width="100" />
 
       <template #empty>
         <el-empty description="没有数据" />
@@ -63,7 +61,9 @@ import dayjs from 'dayjs'
 
 const filterForm = ref({
   dietDate: '',
-  mealType: ''
+  mealType: '',
+  pregnancy: '0',
+  lactation: '0'
 })
 const intakes = ref([]);
 
