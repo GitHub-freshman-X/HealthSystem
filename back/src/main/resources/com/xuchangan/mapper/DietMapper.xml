@@ -49,4 +49,29 @@
         order by diary_date desc
     </select>
 
+    <select id="getDietNutrientIntake" resultType="com.xuchangan.pojo.DietNutrientIntake">
+        SELECT
+        dfv.real_name,
+        dfv.diet_date,
+        dfv.meal_type,
+        fnv.nutrient_name,
+        ROUND(SUM(dfv.quantity / 100.0 * fnv.amount), 2) AS intake_amount
+        FROM diet_food_view dfv
+        JOIN food_nutrient_view fnv ON dfv.food_name = fnv.food_name
+        <where>
+            dfv.user_id = #{userId}
+            <if test="dietDate != null">
+                AND dfv.diet_date = #{dietDate}
+            </if>
+            <if test="mealType != null and mealType != ''">
+                AND dfv.meal_type = #{mealType}
+            </if>
+        </where>
+        GROUP BY
+        dfv.real_name,
+        dfv.diet_date,
+        dfv.meal_type,
+        fnv.nutrient_name
+    </select>
+
 </mapper>

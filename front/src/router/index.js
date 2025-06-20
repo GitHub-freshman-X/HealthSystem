@@ -24,6 +24,7 @@ import SumTime from '@/views/exercise/SumTime.vue';
 // 饮食
 import DietShow from '@/views/diet/DietShow.vue';
 import DietExerciseDiary from '@/views/diet/DietExerciseDiary.vue';
+import DietNutrientIntake from '@/views/diet/DietNutrientIntake.vue';
 
 // 定义路由关系
 const routes = [
@@ -55,7 +56,8 @@ const routes = [
 
       // 饮食日记
       { path: 'diet/show', component: DietShow },
-      { path: 'diet/diary', component: DietExerciseDiary }
+      { path: 'diet/diary', component: DietExerciseDiary },
+      { path: 'diet/nutrientIntake', component: DietNutrientIntake }
     ]
   }
 ]

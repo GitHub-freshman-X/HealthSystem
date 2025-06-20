@@ -31,9 +31,20 @@ const uploadDietExerciseDiaryService = (diary)=>{
   return request.post('/diet/uploadDiary', diary)
 }
 
+// 获取营养素摄入含量
+const getDietNutrientIntakeService = (params)=>{
+  const urlParams = new URLSearchParams();
+  for(let key in params){
+    urlParams.append(key, params[key]);
+  }
+  console.log('getDietNutrientIntakeService: ', urlParams.toString())
+  return request.post('/diet/nutrientIntake', urlParams)
+}
+
 export {
   getDietFoodsService,
   uploadDietFoodsService,
   getDietFoodsDiaryService,
-  uploadDietExerciseDiaryService
+  uploadDietExerciseDiaryService,
+  getDietNutrientIntakeService
 }

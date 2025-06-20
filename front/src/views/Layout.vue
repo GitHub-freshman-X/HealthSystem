@@ -85,6 +85,10 @@
             <span>饮食运动日记</span>
           </el-menu-item>
 
+          <el-menu-item index="/diet/nutrientIntake">
+            <span>营养素摄入</span>
+          </el-menu-item>
+
         </el-sub-menu>
 
         <!-- 每日健康面板 -->

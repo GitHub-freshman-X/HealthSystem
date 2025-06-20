@@ -1,9 +1,6 @@
 package com.xuchangan.mapper;
 
-import com.xuchangan.pojo.Diet;
-import com.xuchangan.pojo.DietExerciseDiary;
-import com.xuchangan.pojo.DietFoodList;
-import com.xuchangan.pojo.DietFoodView;
+import com.xuchangan.pojo.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -38,4 +35,6 @@ public interface DietMapper {
     @Insert("insert into diet_exercise_diary(user_id, diary_date, water_intake, content) "
     + "values(#{userId}, #{diaryDate}, #{waterIntake}, #{content})")
     void uploadDiary(DietExerciseDiary dietExerciseDiary);
+
+    List<DietNutrientIntake> getDietNutrientIntake(Integer userId, LocalDate dietDate, String mealType);
 }

@@ -1,9 +1,6 @@
 package com.xuchangan.controller;
 
-import com.xuchangan.pojo.DietExerciseDiary;
-import com.xuchangan.pojo.DietFoodList;
-import com.xuchangan.pojo.PageBean;
-import com.xuchangan.pojo.Result;
+import com.xuchangan.pojo.*;
 import com.xuchangan.service.DietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -55,6 +52,18 @@ public class DietController {
     ){
         dietService.uploadDiary(dietExerciseDiary);
         return Result.success();
+    }
+
+    // 统计某顿饭各种营养素的摄入
+    @PostMapping("/nutrientIntake")
+    public Result<PageBean<DietNutrientIntake>> getDietNutrientIntake(
+            Integer pageNum,
+            Integer pageSize,
+            @RequestParam LocalDate dietDate,
+            @RequestParam(required = false) String mealType
+    ){
+        PageBean<DietNutrientIntake> result = dietService.getDietNutrientIntake(pageNum, pageSize, dietDate, mealType);
+        return Result.success(result);
     }
 
 }

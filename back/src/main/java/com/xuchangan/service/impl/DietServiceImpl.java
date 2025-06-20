@@ -118,6 +118,25 @@ public class DietServiceImpl implements DietService {
         dietExerciseDiary.setUserId(userId);
         dietMapper.uploadDiary(dietExerciseDiary);
     }
+
+    @Override
+    public PageBean<DietNutrientIntake> getDietNutrientIntake(
+            Integer pageNum,
+            Integer pageSize,
+            LocalDate dietDate,
+            String mealType) {
+        PageBean<DietNutrientIntake> pb = new PageBean<>();
+        PageHelper.startPage(pageNum, pageSize);
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer userId = (Integer) map.get("id");
+
+        List<DietNutrientIntake> intakeList = dietMapper.getDietNutrientIntake(userId, dietDate, mealType);
+
+        PageInfo<DietNutrientIntake> pageInfo = new PageInfo<>(intakeList);
+        pb.setTotal(pageInfo.getTotal());
+        pb.setItems(pageInfo.getList());
+        return pb;
+    }
 }
 
 
