@@ -236,8 +236,6 @@ const uploadDietFoods = async()=>{
   form.foodList = foodTable.value.map(item => item.foodName);
   form.quantityList = foodTable.value.map(item => item.quantity);
 
-  console.log('上传的饮食记录:', form.dietDate);
-
   let result = await uploadDietFoodsService(form);
   dialogVisible.value = false;
   ElMessage.success('饮食记录上传成功');

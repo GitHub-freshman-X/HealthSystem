@@ -4,15 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DietDiary {
+public class DietExerciseDiary {
     private int dietId;
     private int userId;
-    private LocalDateTime diaryDate;
-    private String mealType;
+    private LocalDate diaryDate;
     private double waterIntake;
+    private String content;
 }

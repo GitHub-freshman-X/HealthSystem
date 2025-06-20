@@ -1,5 +1,6 @@
 package com.xuchangan.controller;
 
+import com.xuchangan.pojo.DietExerciseDiary;
 import com.xuchangan.pojo.DietFoodList;
 import com.xuchangan.pojo.PageBean;
 import com.xuchangan.pojo.Result;
@@ -36,5 +37,24 @@ public class DietController {
         return Result.success();
     }
 
+    // 日记查看
+    @PostMapping("/diary")
+    public Result<PageBean<DietExerciseDiary>> getDietExerciseDiary(
+            Integer pageNum,
+            Integer pageSize,
+            @RequestParam(required = false) LocalDate diaryDate
+    ){
+        PageBean<DietExerciseDiary> result = dietService.getDietExerciseDiary(pageNum, pageSize, diaryDate);
+        return Result.success(result);
+    }
+
+    // 上传日记
+    @PostMapping("/uploadDiary")
+    public Result uploadDiary(
+            @RequestBody DietExerciseDiary dietExerciseDiary
+    ){
+        dietService.uploadDiary(dietExerciseDiary);
+        return Result.success();
+    }
 
 }

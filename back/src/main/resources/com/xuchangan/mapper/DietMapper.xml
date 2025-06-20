@@ -38,5 +38,15 @@
         </if>
         ORDER BY diet_date DESC, FIELD(meal_type, '加餐', '晚餐', '午餐', '早餐')
     </select>
+    <select id="getDietExerciseDiary" resultType="com.xuchangan.pojo.DietExerciseDiary">
+        select * from diet_exercise_diary
+        <where>
+            user_id=#{userId}
+            <if test="diaryDate!=null">
+                and diary_date=#{diaryDate}
+            </if>
+        </where >
+        order by diary_date desc
+    </select>
 
 </mapper>

@@ -77,8 +77,12 @@
             <span>饮食运动日记</span>
           </template>
           
-          <el-menu-item index="/diet/diary">
+          <el-menu-item index="/diet/show">
             <span>饮食录入</span>
+          </el-menu-item>
+
+          <el-menu-item index="/diet/diary">
+            <span>饮食运动日记</span>
           </el-menu-item>
 
         </el-sub-menu>

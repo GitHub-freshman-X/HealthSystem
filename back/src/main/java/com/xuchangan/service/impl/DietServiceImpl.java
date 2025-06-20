@@ -3,10 +3,7 @@ package com.xuchangan.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xuchangan.mapper.DietMapper;
-import com.xuchangan.pojo.Diet;
-import com.xuchangan.pojo.DietFoodList;
-import com.xuchangan.pojo.DietFoodView;
-import com.xuchangan.pojo.PageBean;
+import com.xuchangan.pojo.*;
 import com.xuchangan.service.DietService;
 import com.xuchangan.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +92,31 @@ public class DietServiceImpl implements DietService {
             Integer foodId = dietMapper.getFoodIdByName(view.getFoodName());
             dietMapper.insertIntoDietFood(dietId, foodId, view.getQuantity());
         }
+    }
+
+    @Override
+    public PageBean<DietExerciseDiary> getDietExerciseDiary(Integer pageNum, Integer pageSize, LocalDate diaryDate) {
+        PageBean<DietExerciseDiary> pb = new PageBean<>();
+        PageHelper.startPage(pageNum, pageSize);
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer userId = (Integer) map.get("id");
+
+        List<DietExerciseDiary> diaryList = dietMapper.getDietExerciseDiary(userId, diaryDate);
+
+        PageInfo<DietExerciseDiary> pageInfo = new PageInfo<>(diaryList);
+
+        pb.setTotal(pageInfo.getTotal());
+        pb.setItems(pageInfo.getList());
+
+        return pb;
+    }
+
+    @Override
+    public void uploadDiary(DietExerciseDiary dietExerciseDiary) {
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer userId = (Integer) map.get("id");
+        dietExerciseDiary.setUserId(userId);
+        dietMapper.uploadDiary(dietExerciseDiary);
     }
 }
 
