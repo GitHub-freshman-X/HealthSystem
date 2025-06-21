@@ -51,11 +51,13 @@ public class NutrientController {
     }
 
     // 查询食物所包含的营养素
-    @PostMapping("/food")
-    public Result<FoodNutrient> getFoodNutrient(
-
+    @PostMapping("/foodNutrient")
+    public Result<List<FoodNutrient>> getFoodNutrient(
+            @RequestParam String foodName,
+            @RequestParam(required = false) String nutrientName
     ){
-        
+        List<FoodNutrient> result = nutrientService.getFoodNutrient(foodName, nutrientName);
+        return Result.success(result);
     }
 
 }

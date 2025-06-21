@@ -13,4 +13,15 @@
         where ns.gender=#{gender}
           and #{age} between ns.age_min and ns.age_max
     </select>
+
+    <select id="getFoodNutrient" resultType="com.xuchangan.pojo.FoodNutrient">
+        select *
+        from food_nutrient_view
+        <where>
+            food_name = #{foodName}
+            <if test="nutrientName!=null and nutrientName!=''">
+                and nutrient_name = #{nutrientName}
+            </if>
+        </where>
+    </select>
 </mapper>

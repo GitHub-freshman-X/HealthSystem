@@ -52,6 +52,10 @@
           <el-menu-item index="/nutrient/supplyRecommend">
             <span>营养素推荐</span>
           </el-menu-item>
+
+          <el-menu-item index="/nutrient/foodNutrient">
+            <span>常见食物所含营养素</span>
+          </el-menu-item>
         </el-sub-menu>
 
         <!-- 运动板块 -->

@@ -32,10 +32,20 @@ const getSupplyRecommendService = (params)=>{
   return request.post('/nutrient/supplyRecommend', urlParams)
 }
 
+// 常见食物所含营养素
+const getFoodNutrientService = (params)=>{
+  let urlParams = new URLSearchParams();
+  for(const key in params) {
+    urlParams.append(key, params[key]);
+  }
+  return request.post('/nutrient/foodNutrient', urlParams)
+}
+
 export {
   getAllNutrientsService,
   addNutrientService,
   deleteNutrientService,
   updateNutrientService,
-  getSupplyRecommendService
+  getSupplyRecommendService,
+  getFoodNutrientService
 }
