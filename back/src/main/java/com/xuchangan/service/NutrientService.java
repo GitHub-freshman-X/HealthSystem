@@ -1,6 +1,7 @@
 package com.xuchangan.service;
 
 import com.xuchangan.pojo.Nutrient;
+import com.xuchangan.pojo.NutrientRecommendDTO;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface NutrientService {
 
     // 更新
     void update(Nutrient nutrient);
+
+    List<NutrientRecommendDTO> getSupplyRecommend(Integer age, String gender, Double height, Double weight);
 }

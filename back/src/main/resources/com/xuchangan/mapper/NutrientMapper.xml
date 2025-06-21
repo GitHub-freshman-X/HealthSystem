@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuchangan.mapper.NutrientMapper">
+    <select id="getSupplyRecommend" resultType="com.xuchangan.pojo.NutrientRecommendDTO">
+        select
+            n.name as nutrient_name,
+            ns.recommend_amount
+        from nutrient_standard ns
+        join nutrient n on ns.nutrient_id = n.nutrient_id
+        where ns.gender=#{gender}
+          and #{age} between ns.age_min and ns.age_max
+    </select>
+</mapper>

@@ -2,6 +2,7 @@ package com.xuchangan.service.impl;
 
 import com.xuchangan.mapper.NutrientMapper;
 import com.xuchangan.pojo.Nutrient;
+import com.xuchangan.pojo.NutrientRecommendDTO;
 import com.xuchangan.service.NutrientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,11 @@ public class NutrientServiceImpl implements NutrientService {
     @Override
     public void update(Nutrient nutrient) {
         nutrientMapper.update(nutrient);
+    }
+
+    @Override
+    public List<NutrientRecommendDTO> getSupplyRecommend(Integer age, String gender, Double height, Double weight) {
+        List<NutrientRecommendDTO> recommendList = nutrientMapper.getSupplyRecommend(age, gender, height, weight);
+        return recommendList;
     }
 }

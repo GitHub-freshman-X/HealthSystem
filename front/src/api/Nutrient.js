@@ -23,9 +23,19 @@ const updateNutrientService = (nutrient)=>{
   return request.put('/nutrient/update', nutrient)
 }
 
+// 获取推荐值
+const getSupplyRecommendService = (params)=>{
+  let urlParams = new URLSearchParams();
+  for(const key in params) {
+    urlParams.append(key, params[key]);
+  }
+  return request.post('/nutrient/supplyRecommend', urlParams)
+}
+
 export {
   getAllNutrientsService,
   addNutrientService,
   deleteNutrientService,
-  updateNutrientService
+  updateNutrientService,
+  getSupplyRecommendService
 }

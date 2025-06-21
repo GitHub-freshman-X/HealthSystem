@@ -11,6 +11,7 @@ import UserResetPassword from '@/views/user/UserResetPassword.vue'
 
 // 营养素
 import AllNutrient from '@/views/nutrient/AllNutrients.vue'
+import NutrientRecommend from '@/views/nutrient/NutrientRecommend.vue';
 
 // 用户健康
 import HealthShow from '@/views/health/HealthShow.vue';
@@ -45,6 +46,7 @@ const routes = [
 
       // 营养素
       { path: 'nutrient/all', component: AllNutrient },
+      { path: 'nutrient/supplyRecommend', component: NutrientRecommend },
 
       // 个人健康
       { path: 'health/show', component: HealthShow },

@@ -49,6 +49,7 @@
       <el-table-column label="营养素" width="200" prop="nutrientName" />
       <el-table-column label="摄入量" width="200" prop="intakeAmount" />
       <el-table-column label="推荐摄入量" width="200" prop="recommendAmount" />
+      <el-table-column label="单位" width="200" prop="unit" />
       <el-table-column label="是否充足" width="100" prop="isSufficient" />
 
       <template #empty>

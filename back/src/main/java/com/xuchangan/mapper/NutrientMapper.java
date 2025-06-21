@@ -1,6 +1,7 @@
 package com.xuchangan.mapper;
 
 import com.xuchangan.pojo.Nutrient;
+import com.xuchangan.pojo.NutrientRecommendDTO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface NutrientMapper {
     @Update("update nutrient set name=#{name}, unit=#{unit}, function_desc=#{functionDesc}, target_benefits=#{targetBenefits} " +
             "where nutrient_id=#{nutrientId}")
     void update(Nutrient nutrient);
+
+    List<NutrientRecommendDTO> getSupplyRecommend(Integer age, String gender, Double height, Double weight);
 }

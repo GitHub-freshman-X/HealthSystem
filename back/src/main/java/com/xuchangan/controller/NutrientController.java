@@ -1,8 +1,6 @@
 package com.xuchangan.controller;
 
-import com.xuchangan.pojo.Nutrient;
-import com.xuchangan.pojo.PageBean;
-import com.xuchangan.pojo.Result;
+import com.xuchangan.pojo.*;
 import com.xuchangan.service.NutrientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +36,26 @@ public class NutrientController {
     public Result update(@RequestBody Nutrient nutrient) {
         nutrientService.update(nutrient);
         return Result.success();
+    }
+
+    // 根据年龄、性别、身高、体重查营养素供给量
+    @PostMapping("/supplyRecommend")
+    public Result<List<NutrientRecommendDTO>> getSupplyRecommend(
+            @RequestParam Integer age,
+            @RequestParam String gender,
+            @RequestParam Double height,
+            @RequestParam Double weight
+    ){
+        List<NutrientRecommendDTO> result = nutrientService.getSupplyRecommend(age, gender, height, weight);
+        return Result.success(result);
+    }
+
+    // 查询食物所包含的营养素
+    @PostMapping("/food")
+    public Result<FoodNutrient> getFoodNutrient(
+
+    ){
+        
     }
 
 }
