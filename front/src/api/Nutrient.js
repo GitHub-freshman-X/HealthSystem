@@ -2,8 +2,12 @@
 import request from '@/utils/request.js'
 
 // 获取所有营养素列表
-const getAllNutrientsService = ()=>{
-  return request.get('/nutrient/list')
+const getAllNutrientsService = (params)=>{
+  let urlParams = new URLSearchParams();
+  for(const key in params) {
+    urlParams.append(key, params[key]);
+  }
+  return request.post('/nutrient/list', urlParams)
 }
 
 // 添加
@@ -41,11 +45,21 @@ const getFoodNutrientService = (params)=>{
   return request.post('/nutrient/foodNutrient', urlParams)
 }
 
+// 包含指定营养素的食物
+const getFoodByNutrientService = (params)=>{
+  let urlParams = new URLSearchParams();
+  for(const key in params) {
+    urlParams.append(key, params[key]);
+  }
+  return request.post('/nutrient/foodByNutrient', urlParams)
+}
+
 export {
   getAllNutrientsService,
   addNutrientService,
   deleteNutrientService,
   updateNutrientService,
   getSupplyRecommendService,
-  getFoodNutrientService
+  getFoodNutrientService,
+  getFoodByNutrientService
 }

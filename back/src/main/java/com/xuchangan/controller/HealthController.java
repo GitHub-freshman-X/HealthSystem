@@ -57,4 +57,14 @@ public class HealthController {
         return Result.success();
     }
 
+    // 获取一段时间内的所有健康数据，搞折线图
+    @PostMapping("/userHealthList")
+    public Result<List<UserHealthList>> getUserHealthList(
+            @RequestParam(required = false) LocalDate startDate,
+            @RequestParam(required = false) LocalDate endDate
+    ) throws NoSuchFieldException, IllegalAccessException {
+        List<UserHealthList> result = healthService.getUserHealthList(startDate, endDate);
+        return Result.success(result);
+    }
+
 }

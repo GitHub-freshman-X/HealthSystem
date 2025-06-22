@@ -34,4 +34,6 @@ public interface HealthMapper {
 
     @Insert("insert into health_report(user_id, record_time, img_url) values(#{userId}, #{recordTime}, #{imgUrl})")
     void uploadReport(HealthReport healthReport);
+
+    List<UserHealthView> getUserHealthList(Integer userId, LocalDate startDate, LocalDate endDate);
 }

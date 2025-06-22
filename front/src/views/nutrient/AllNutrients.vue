@@ -9,6 +9,17 @@
       </div>
     </template>
 
+    <!-- 筛选 -->
+    <el-form :model="filterForm" inline>
+      <el-form-item label="营养素名称">
+        <el-input v-model="filterForm.nutrientName" placeholder="请输入营养素名称" clearable></el-input>
+      </el-form-item>
+
+      <el-form-item>
+        <el-button type="primary" @click="getAllNutrients">查询</el-button>
+      </el-form-item>
+    </el-form>
+
     <!-- 表格展示 -->
     <el-table :data="nutrients" style="width: 100%">
       <el-table-column label="序号" width="100" type="index"></el-table-column>
@@ -64,6 +75,10 @@
 import { Edit, Delete } from '@element-plus/icons-vue'
 import { ref } from 'vue';
 
+const filterForm = ref({
+  nutrientName: ''
+})
+
 const nutrients = ref([]);
 const dialogVisible = ref(false)
 const title = ref('添加营养素');
@@ -71,7 +86,10 @@ const title = ref('添加营养素');
 import { getAllNutrientsService } from '@/api/Nutrient';
 // 获取营养素数据
 const getAllNutrients = async()=>{
-  let result = await getAllNutrientsService();
+  let params = {
+    nutrientName: filterForm.value.nutrientName
+  }
+  let result = await getAllNutrientsService(params);
   nutrients.value = result.data;
 }
 getAllNutrients()

@@ -13,11 +13,13 @@ import UserResetPassword from '@/views/user/UserResetPassword.vue'
 import AllNutrient from '@/views/nutrient/AllNutrients.vue'
 import NutrientRecommend from '@/views/nutrient/NutrientRecommend.vue';
 import FoodNutrient from '@/views/nutrient/FoodNutrient.vue';
+import FoodByNutrient from '@/views/nutrient/FoodByNutrient.vue';
 
 // 用户健康
 import HealthShow from '@/views/health/HealthShow.vue';
 import HealthVisualization from '@/views/health/HealthVisualization.vue';
 import HealthReport from '@/views/health/HealthReport.vue';
+import HealthCompare from '@/views/health/HealthCompare.vue';
 
 // 运动
 import ExerciseRecords from '@/views/exercise/ExerciseRecords.vue';
@@ -28,6 +30,9 @@ import DietShow from '@/views/diet/DietShow.vue';
 import DietExerciseDiary from '@/views/diet/DietExerciseDiary.vue';
 import DietNutrientIntake from '@/views/diet/DietNutrientIntake.vue';
 import NutrientSufficient from '@/views/diet/NutrientSufficient.vue';
+
+// 运动健康面板
+import ExerciseDietPanel from '@/views/panel/ExerciseDietPanel.vue';
 
 // 定义路由关系
 const routes = [
@@ -49,11 +54,13 @@ const routes = [
       { path: 'nutrient/all', component: AllNutrient },
       { path: 'nutrient/supplyRecommend', component: NutrientRecommend },
       { path: 'nutrient/foodNutrient', component: FoodNutrient },
+      { path: 'nutrient/foodByNutrient', component: FoodByNutrient },
 
       // 个人健康
       { path: 'health/show', component: HealthShow },
       { path: 'health/visualization', component: HealthVisualization },
       { path: 'health/report', component: HealthReport },
+      { path: 'health/compare', component: HealthCompare },
 
       // 运动记录
       { path: 'exercise/records', component: ExerciseRecords },
@@ -63,7 +70,10 @@ const routes = [
       { path: 'diet/show', component: DietShow },
       { path: 'diet/diary', component: DietExerciseDiary },
       { path: 'diet/nutrientIntake', component: DietNutrientIntake },
-      { path: 'diet/nutrientSufficient', component: NutrientSufficient }
+      { path: 'diet/nutrientSufficient', component: NutrientSufficient },
+
+      // 运动健康面板
+      { path: 'panel/exerciseDiet', component: ExerciseDietPanel }
     ]
   }
 ]

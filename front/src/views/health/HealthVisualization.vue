@@ -22,13 +22,6 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { use } from 'echarts/core'
-import { BarChart } from 'echarts/charts'
-import { TitleComponent, TooltipComponent, GridComponent, LegendComponent } from 'echarts/components'
-import { CanvasRenderer } from 'echarts/renderers'
-import VChart from 'vue-echarts'
-
-use([BarChart, TitleComponent, TooltipComponent, GridComponent, LegendComponent, CanvasRenderer])
 
 import { useHealthInfoStore } from '@/stores/healthInfo'
 const healthInfoStore = useHealthInfoStore()

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface NutrientService {
     // 查询所有营养素数据
-    List<Nutrient> list();
+    List<Nutrient> list(String nutrientName);
 
     // 添加营养素
     void add(Nutrient nutrient);
@@ -22,4 +22,6 @@ public interface NutrientService {
     List<NutrientRecommendDTO> getSupplyRecommend(Integer age, String gender, Double height, Double weight);
 
     List<FoodNutrient> getFoodNutrient(String foodName, String nutrientName);
+
+    List<FoodNutrient> getFoodByNutrient(String nutrientName);
 }

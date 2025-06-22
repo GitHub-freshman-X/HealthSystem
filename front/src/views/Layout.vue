@@ -34,6 +34,11 @@
             <span>个人体检报告</span>
           </el-menu-item>
 
+          <!-- 个人体检报告 -->
+          <el-menu-item index="/health/compare">
+            <span>健康数据对比</span>
+          </el-menu-item>
+
         </el-sub-menu>
 
         <!-- 营养素 -->
@@ -55,6 +60,10 @@
 
           <el-menu-item index="/nutrient/foodNutrient">
             <span>常见食物所含营养素</span>
+          </el-menu-item>
+
+          <el-menu-item index="/nutrient/foodByNutrient">
+            <span>包含指定营养素的食物</span>
           </el-menu-item>
         </el-sub-menu>
 
@@ -104,7 +113,7 @@
         </el-sub-menu>
 
         <!-- 每日健康面板 -->
-        <el-menu-item>
+        <el-menu-item index="/panel/exerciseDiet">
           <el-icon>
             <PieChart />
           </el-icon>

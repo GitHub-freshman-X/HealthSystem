@@ -4,6 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xuchangan.mapper.NutrientMapper">
+    <select id="list" resultType="com.xuchangan.pojo.Nutrient">
+        select *
+        from nutrient
+        <where>
+            <if test="nutrientName!=null and nutrientName!=''">
+                name = #{nutrientName}
+            </if>
+        </where>
+    </select>
+
     <select id="getSupplyRecommend" resultType="com.xuchangan.pojo.NutrientRecommendDTO">
         select
             n.name as nutrient_name,

@@ -31,4 +31,5 @@ public class UserHealthView {
     // 派生字段
     private Double bodyFatRate;  // 体脂率 (%)
     private Double bmi;          // 身体质量指数
+    private Double bodyScore;
 }

@@ -19,4 +19,6 @@ public interface HealthService {
 
     // 上传报告
     void uploadReport(String realName, String imgUrl);
+
+    List<UserHealthList> getUserHealthList(LocalDate startDate, LocalDate endDate) throws NoSuchFieldException, IllegalAccessException;
 }

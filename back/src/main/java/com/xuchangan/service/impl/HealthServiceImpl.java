@@ -9,11 +9,10 @@ import com.xuchangan.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class HealthServiceImpl implements HealthService {
@@ -78,5 +77,36 @@ public class HealthServiceImpl implements HealthService {
 
         // 调用mapper
         healthMapper.uploadReport(healthReport);
+    }
+
+    @Override
+    public List<UserHealthList> getUserHealthList(LocalDate startDate, LocalDate endDate) throws NoSuchFieldException, IllegalAccessException {
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer userId = (Integer) map.get("id");
+
+        List<UserHealthView> healthViews = healthMapper.getUserHealthList(userId, startDate, endDate);
+
+        List<String> fieldNames = Arrays.asList(
+                "recordDate", "weight", "bodyWater", "protein", "fatMass", "muscleMass",
+                "bmr", "visceralFat", "bodyFatRate", "bmi", "bodyScore"
+        );
+
+        List<UserHealthList> result = new ArrayList<>();
+        for (String fieldName : fieldNames) {
+            UserHealthList list = new UserHealthList();
+            list.setHealthName(fieldName);
+
+            List values = new ArrayList<>();
+            for (UserHealthView view : healthViews) {
+                Field field = UserHealthView.class.getDeclaredField(fieldName);
+                field.setAccessible(true);
+                Object value = field.get(view);
+                values.add(value);
+            }
+
+            list.setValues(values);
+            result.add(list);
+        }
+        return result;
     }
 }

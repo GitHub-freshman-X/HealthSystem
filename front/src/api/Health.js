@@ -38,10 +38,20 @@ const uploadHealthReportService = (reportData)=>{
   return request.post('/health/uploadReport', params)
 }
 
+// 健康数据对比
+const getUserHealthCompareService = (params)=>{
+  let urlParams = new URLSearchParams()
+  for (const key in params) {
+    urlParams.append(key, params[key]);
+  }
+  return request.post('/health/userHealthList', urlParams)
+}
+
 export {
   getHealthInfoService,
   updateHealthInfoService,
   getAvgHealthInfoService,
   getHealthReportsService,
   uploadHealthReportService,
+  getUserHealthCompareService,
 }

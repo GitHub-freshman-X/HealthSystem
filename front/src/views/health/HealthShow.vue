@@ -83,6 +83,17 @@
           </el-form-item>
         </el-form>
       </el-col>
+
+      <!-- 右边的健康评分区域 -->
+      <el-col :span="12" class="score-wrapper">
+        <div class="health-score-container">
+          <h2>身体健康评分</h2>
+          <div class="score-circle">
+            <span class="score-number">{{ healthInfo.bodyScore }}</span>
+          </div>
+        </div>
+      </el-col>
+
     </el-row>
   </el-card>
 </template>
@@ -105,7 +116,8 @@ const healthInfo = ref({
   bmr: null,
   visceralFat: null,
   bodyFatRate: null,
-  bmi: null
+  bmi: null,
+  bodyScore: 0
 })
 
 // 校验规则
@@ -180,5 +192,35 @@ const update = async()=>{
     align-items: center;
     justify-content: space-between;
   }
+}
+
+.score-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.health-score-container {
+  text-align: center;
+  font-family: "Helvetica", "Arial", sans-serif;
+  padding: 40px;
+}
+
+.score-circle {
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(to bottom, #4caf50, #388e3c);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.score-number {
+  font-size: 64px;
+  font-weight: bold;
+  color: white;
 }
 </style>

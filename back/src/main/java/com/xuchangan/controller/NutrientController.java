@@ -14,9 +14,11 @@ public class NutrientController {
     @Autowired
     private NutrientService nutrientService;
 
-    @GetMapping("list")
-    public Result<List<Nutrient>> list(){
-        List<Nutrient> result = nutrientService.list();
+    @PostMapping("list")
+    public Result<List<Nutrient>> list(
+            @RequestParam(required = false) String nutrientName
+    ){
+        List<Nutrient> result = nutrientService.list(nutrientName);
         return Result.success(result);
     }
 
@@ -57,6 +59,15 @@ public class NutrientController {
             @RequestParam(required = false) String nutrientName
     ){
         List<FoodNutrient> result = nutrientService.getFoodNutrient(foodName, nutrientName);
+        return Result.success(result);
+    }
+
+    // 查询包含指定营养素的食物
+    @PostMapping("/foodByNutrient")
+    public Result<List<FoodNutrient>> getFoodByNutrient(
+            @RequestParam String nutrientName
+    ){
+        List<FoodNutrient> result = nutrientService.getFoodByNutrient(nutrientName);
         return Result.success(result);
     }
 

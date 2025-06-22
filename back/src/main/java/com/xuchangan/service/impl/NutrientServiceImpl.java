@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class NutrientServiceImpl implements NutrientService {
@@ -17,8 +19,8 @@ public class NutrientServiceImpl implements NutrientService {
     private NutrientMapper nutrientMapper;
 
     @Override
-    public List<Nutrient> list() {
-        return nutrientMapper.list();
+    public List<Nutrient> list(String nutrientName) {
+        return nutrientMapper.list(nutrientName);
     }
 
     @Override
@@ -46,5 +48,14 @@ public class NutrientServiceImpl implements NutrientService {
     public List<FoodNutrient> getFoodNutrient(String foodName, String nutrientName) {
         List<FoodNutrient> list = nutrientMapper.getFoodNutrient(foodName, nutrientName);
         return list;
+    }
+
+    @Override
+    public List<FoodNutrient> getFoodByNutrient(String nutrientName) {
+        List<FoodNutrient> list = nutrientMapper.getFoodByNutrient(nutrientName);
+        List<FoodNutrient> filteredList = list.stream()
+                .filter(foodNutrient -> foodNutrient.getAmount() > 0)
+                .collect(Collectors.toList());
+        return filteredList;
     }
 }

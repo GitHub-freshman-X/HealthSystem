@@ -15,4 +15,18 @@
         </where>
     </select>
 
+    <select id="getUserHealthList" resultType="com.xuchangan.pojo.UserHealthView">
+        select *
+        from user_health_view
+        <where>
+            user_id = #{userId}
+            <if test="startDate!=null">
+                and record_date &gt;= #{startDate}
+            </if>
+            <if test="endDate!=null">
+                and record_date &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+
 </mapper>

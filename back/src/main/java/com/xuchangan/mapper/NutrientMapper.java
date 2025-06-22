@@ -9,8 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface NutrientMapper {
-    @Select("select * from nutrient")
-    List<Nutrient> list();
+    List<Nutrient> list(String nutrientName);
 
     @Insert("insert into nutrient(name, unit, function_desc, target_benefits) " +
             "values (#{name}, #{unit}, #{functionDesc}, #{targetBenefits})")
@@ -26,4 +25,7 @@ public interface NutrientMapper {
     List<NutrientRecommendDTO> getSupplyRecommend(Integer age, String gender, Double height, Double weight);
 
     List<FoodNutrient> getFoodNutrient(String foodName, String nutrientName);
+
+    @Select("select * from food_nutrient_view where nutrient_name=#{nutrientName} order by amount desc")
+    List<FoodNutrient> getFoodByNutrient(String nutrientName);
 }
