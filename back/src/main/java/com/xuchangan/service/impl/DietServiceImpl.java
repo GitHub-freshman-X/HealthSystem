@@ -3,6 +3,7 @@ package com.xuchangan.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xuchangan.mapper.DietMapper;
+import com.xuchangan.mapper.NutrientMapper;
 import com.xuchangan.pojo.*;
 import com.xuchangan.service.DietService;
 import com.xuchangan.utils.ThreadLocalUtil;
@@ -20,6 +21,8 @@ public class DietServiceImpl implements DietService {
 
     @Autowired
     private DietMapper dietMapper;
+    @Autowired
+    private NutrientMapper nutrientMapper;
 
     @Override
     public PageBean<DietFoodList> getDietFoods(Integer pageNum, Integer pageSize, LocalDate dietDate, String mealType) {
@@ -60,6 +63,35 @@ public class DietServiceImpl implements DietService {
 
         return pb;
 
+    }
+
+    @Override
+    public List<DietFoodList> getDietCalories(LocalDate dietDate) {
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer userId = (Integer) map.get("id");
+        List<Diet> mealKeys = dietMapper.getDistinctMeals(userId, dietDate, "");
+
+        List<DietFoodList> resultList = new ArrayList<>();
+        for (Diet key : mealKeys) {
+            List<DietFoodView> views = dietMapper.getDietFoods(userId, key.getDietDate(), key.getMealType());
+
+            DietFoodList group = new DietFoodList();
+            group.setRealName(views.get(0).getRealName());
+            group.setDietDate(key.getDietDate());
+            group.setMealType(key.getMealType());
+
+            Double totalCalories = 0.0;
+            for (DietFoodView view : views) {
+                // 获取当前食物所含“热量”
+                FoodNutrient fn =  nutrientMapper.getFoodNutrient(view.getFoodName(), "热量").get(0);
+                totalCalories += view.getQuantity() / 100.0 * fn.getAmount();
+            }
+            group.setTotalCalories(totalCalories);
+
+            resultList.add(group);
+        }
+
+        return resultList;
     }
 
     @Override

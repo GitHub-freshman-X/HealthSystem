@@ -53,6 +53,14 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     @Override
+    public List<ExerciseRecord> getAllRecordsByDate(LocalDate date) {
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer userId = (Integer) map.get("id");
+        List<ExerciseRecord> records = exerciseMapper.getAllRecords(userId, "", date, date);
+        return records;
+    }
+
+    @Override
     public void upload(ExerciseRecord record) {
         // 获取当前用户 ID
         Map<String, Object> map = ThreadLocalUtil.get();

@@ -17,4 +17,6 @@ public interface DietService {
     PageBean<DietNutrientIntake> getDietNutrientIntake(Integer pageNum, Integer pageSize, LocalDate dietDate, String mealType);
 
     List<NutrientSufficient> getNutrientSufficient(String gender, Integer age, LocalDate dietDate, String pregnancy, String lactation);
+
+    List<DietFoodList> getDietCalories(LocalDate dietDate);
 }

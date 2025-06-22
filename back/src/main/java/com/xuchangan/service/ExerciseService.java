@@ -16,4 +16,6 @@ public interface ExerciseService {
     void upload(ExerciseRecord record);
 
     Statistics getSumTime(LocalDate startDate, LocalDate endDate);
+
+    List<ExerciseRecord> getAllRecordsByDate(LocalDate date);
 }

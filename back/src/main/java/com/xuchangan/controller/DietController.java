@@ -27,6 +27,15 @@ public class DietController {
         return Result.success(result);
     }
 
+    // 查询当前用户具体某一天的每顿饭摄入的热量
+    @PostMapping("/getDietCalories")
+    public Result<List<DietFoodList>> getDietCalories(
+            @RequestParam LocalDate dietDate
+    ){
+        List<DietFoodList> result = dietService.getDietCalories(dietDate);
+        return Result.success(result);
+    }
+
     // 上传
     @PostMapping("/uploadDietFoods")
     public Result uploadDietFoods(@RequestBody DietFoodList dietFoodList){
@@ -72,8 +81,8 @@ public class DietController {
             @RequestParam String gender,
             @RequestParam Integer age,
             @RequestParam LocalDate dietDate,
-            @RequestParam String pregnancy,
-            @RequestParam String lactation
+            @RequestParam(required = false) String pregnancy,
+            @RequestParam(required = false) String lactation
     ){
         List<NutrientSufficient> result = dietService.getNutrientSufficient(gender, age, dietDate, pregnancy, lactation);
         return Result.success(result);

@@ -15,6 +15,7 @@ public class DietFoodList {
     private String realName;
     private LocalDate dietDate;
     private String mealType;
+    private Double totalCalories;
 
     List<String> foodList;
     List<Double> quantityList;

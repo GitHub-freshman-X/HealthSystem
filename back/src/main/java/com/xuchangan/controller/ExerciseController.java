@@ -32,6 +32,13 @@ public class ExerciseController {
         return Result.success(result);
     }
 
+    // 获取当前用户指定某天的所有运动记录
+    @PostMapping("/allRecordsByDate")
+    public Result<List<ExerciseRecord>> getAllRecordsByDate(LocalDate date){
+        List<ExerciseRecord> records = exerciseService.getAllRecordsByDate(date);
+        return Result.success(records);
+    }
+
     // 上传新的运动记录
     @PostMapping("/upload")
     public Result upload(@RequestBody ExerciseRecord record){

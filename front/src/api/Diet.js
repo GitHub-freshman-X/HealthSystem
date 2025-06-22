@@ -10,6 +10,16 @@ const getDietFoodsService = (params)=>{
   return request.post('/diet/getDietFoods', urlParams)
 }
 
+// 获取每顿饭摄入的热量
+const getDietCaloriesService = (params)=>{
+  const urlParams = new URLSearchParams();
+  for(let key in params){
+    urlParams.append(key, params[key]);
+  }
+  console.log('getDietCaloriesService: ', urlParams.toString())
+  return request.post('/diet/getDietCalories', urlParams)
+}
+
 // 上传饮食记录
 const uploadDietFoodsService = (record)=>{
   // console.log('uploadDietFoodsService: ', record)
@@ -53,6 +63,7 @@ const getNutrientSufficientService = (params)=>{
 
 export {
   getDietFoodsService,
+  getDietCaloriesService,
   uploadDietFoodsService,
   getDietFoodsDiaryService,
   uploadDietExerciseDiaryService,
