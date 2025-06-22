@@ -81,10 +81,18 @@ public class DietServiceImpl implements DietService {
             group.setMealType(key.getMealType());
 
             Double totalCalories = 0.0;
+            group.setFoodList(new ArrayList<>());
+            group.setQuantityList(new ArrayList<>());
+            group.setCaloriesList(new ArrayList<>());
+
             for (DietFoodView view : views) {
                 // 获取当前食物所含“热量”
                 FoodNutrient fn =  nutrientMapper.getFoodNutrient(view.getFoodName(), "热量").get(0);
-                totalCalories += view.getQuantity() / 100.0 * fn.getAmount();
+                Double calories = view.getQuantity() / 100.0 * fn.getAmount();
+                totalCalories += calories;
+                group.getFoodList().add(view.getFoodName());
+                group.getQuantityList().add(view.getQuantity());
+                group.getCaloriesList().add(calories);
             }
             group.setTotalCalories(totalCalories);
 

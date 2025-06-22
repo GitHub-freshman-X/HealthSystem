@@ -59,31 +59,6 @@ import MealTabs from '@/views/panel/MealTabs.vue'
 import { ref } from 'vue'
 import dayjs from 'dayjs'
 
-const nutrientData= [
-  { name: '蛋白质', intake: 68, recommended: 60 },
-  { name: '脂肪', intake: 42, recommended: 50 },
-  { name: '碳水', intake: 210, recommended: 200 },
-  { name: '维生素A', intake: 850, recommended: 900 },
-  // ...其他13种营养素
-]
-
-const exerciseRecords= [
-  { time: '07:30', type: '跑步', duration: 30, calories: 240, intensity: 85 },
-  { time: '18:00', type: '瑜伽', duration: 35, calories: 180, intensity: 60 }
-]
-
-const dietRecords= [
-  {
-    type: '早餐',
-    time: '08:00',
-    items: [
-      { time: '08:15', name: '全麦面包', calories: 180, protein: 8, carbs: 30, fat: 2 },
-      { time: '08:20', name: '牛奶', calories: 120, protein: 8, carbs: 12, fat: 5 }
-    ]
-  },
-  // 午餐、晚餐数据...
-]
-
 const filterForm = ref({
   date: '2025-06-18'
 })
@@ -92,6 +67,20 @@ const filterForm = ref({
 
 import { useHealthInfoStore } from '@/stores/healthInfo'
 const healthInfoStore = useHealthInfoStore()
+
+import {
+  UserFilled,
+  Clock,
+  MagicStick, // 替代 Fire
+  ScaleToOriginal
+} from '@element-plus/icons-vue'
+
+const iconMap = {
+  'el-icon-walk': UserFilled,
+  'el-icon-timer': Clock,
+  'el-icon-fire': MagicStick, // 没有 Fire，使用 MagicStick 替代
+  'el-icon-scale': ScaleToOriginal
+}
 // summaryCard
 const summaryCards = ref([
   { title: '今日步数', value: null, unit: '步', icon: 'el-icon-walk', color: '#36a3f7' },
@@ -109,6 +98,12 @@ const calorieData = ref({
   basicMetabolizeRatio: healthInfoStore.getHealthInfo().bmr
 })
 
+const nutrientData= ref([])
+
+const exerciseRecords= ref([])
+
+const dietRecords= ref([])
+
 import { getAllExerciseRecordsByDateService } from '@/api/Exercise.js'
 const getAllExerciseRecordsByDate = async()=>{
   let params = {}
@@ -118,6 +113,7 @@ const getAllExerciseRecordsByDate = async()=>{
     params.date = dayjs().format('YYYY-MM-DD')
   }
   let result = await getAllExerciseRecordsByDateService(params)
+
   if(result.data){
     let totalSteps = 0
     let totalDuration = 0
@@ -139,6 +135,13 @@ const getAllExerciseRecordsByDate = async()=>{
     // TODO：净热量差
     summaryCards.value[3].value =(calorieData.value.breakfast + calorieData.value.lunch + calorieData.value.dinner + calorieData.value.snack)
                                  - (totalCalories + calorieData.value.basicMetabolizeRatio)
+
+    // 记录exerciseRecord
+    exerciseRecords.value = result.data.map(record => ({
+      type: record.exerciseType,
+      duration: record.duration,
+      calories: record.calorieBurned,
+    }))
   }
 }
 
@@ -152,6 +155,7 @@ const getDietCalories = async()=>{
     params.dietDate = dayjs().format('YYYY-MM-DD')
   }
   let result = await getDietCaloriesService(params)
+
   if(result.data){
     result.data.forEach(meal=>{
       if(meal.mealType === '早餐') {
@@ -164,12 +168,56 @@ const getDietCalories = async()=>{
         calorieData.value.snack = meal.totalCalories
       }
     })
+
+    dietRecords.value = result.data.map(meal=>{
+      const items = meal.foodList.map((food, index) => ({
+        name: food,
+        quantity: meal.quantityList[index] ?? null,
+        calories: meal.caloriesList[index] ?? null,
+      }));
+
+      return {
+        type: meal.mealType,
+        items: items
+      }
+    })
+    dietRecords.value.reverse()
   }
+}
+
+// // 营养素分析
+import { getNutrientSufficientService } from '@/api/Diet.js'
+// 获取各个营养素的标准值
+import { useUserInfoStore } from '@/stores/userInfo';
+const userInfoStore = useUserInfoStore();
+const getNutrientStandard = async()=>{
+  let params = {
+    gender: userInfoStore.getUserInfo().gender,
+    age: healthInfoStore.getHealthInfo().age,
+  }
+  if(filterForm.value.date) {
+    params.dietDate = dayjs(filterForm.value.date).format('YYYY-MM-DD');
+  }else {
+    params.dietDate = dayjs().format('YYYY-MM-DD');
+  }
+
+  let result = await getNutrientSufficientService(params)
+  if(result.data) {
+    nutrientData.value = result.data.map(item=>{
+      return {
+        name: item.nutrientName,
+        intake: item.intakeAmount,
+        recommended: item.recommendAmount
+      }
+    })
+  }
+  console.log('nutrientData', nutrientData.value)
 }
 
 const getNutrientData = async()=>{
   await getDietCalories()
   await getAllExerciseRecordsByDate()
+  await getNutrientStandard()
 }
 getNutrientData()
 

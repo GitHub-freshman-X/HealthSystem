@@ -89,12 +89,17 @@
         FROM diet_food_view dfv
                  JOIN food_nutrient_view fnv ON dfv.food_name = fnv.food_name
                  JOIN nutrient_standard ns ON ns.nutrient_id = fnv.nutrient_id
-        WHERE
+        <where>
             ns.gender = #{gender}
-          AND #{age} BETWEEN ns.age_min AND ns.age_max
-          AND dfv.diet_date = #{dietDate}
-          AND ns.pregnancy = #{pregnancy}
-          AND ns.lactation = #{lactation}
+            AND #{age} BETWEEN ns.age_min AND ns.age_max
+            AND dfv.diet_date = #{dietDate}
+            <if test="pregnancy!=null and pregnancy!=''">
+                AND ns.pregnancy = #{pregnancy}
+            </if>
+            <if test="lactation!=null and lactation!=''">
+                AND ns.lactation = #{lactation}
+            </if>
+        </where>
         GROUP BY
             dfv.real_name,
             dfv.diet_date,

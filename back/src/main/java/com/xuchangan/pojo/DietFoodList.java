@@ -19,6 +19,7 @@ public class DietFoodList {
 
     List<String> foodList;
     List<Double> quantityList;
+    List<Double> caloriesList;
     List<String> imagePathList;
 
 }
