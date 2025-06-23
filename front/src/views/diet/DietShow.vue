@@ -244,7 +244,7 @@ const uploadDietFoods = async()=>{
 
 const clearMealModel = ()=>{
   mealModel.value = {
-    realName: '',
+    realName: userInfoStore.getUserInfo().realName,
     dietDate: '',
     mealType: '',
     foodList: [],

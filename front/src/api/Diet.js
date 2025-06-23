@@ -57,8 +57,18 @@ const getNutrientSufficientService = (params)=>{
   for(let key in params){
     urlParams.append(key, params[key]);
   }
-  console.log('getNutrientSufficientService: ', urlParams.toString())
+  // console.log('getNutrientSufficientService: ', urlParams.toString())
   return request.post('/diet/nutrientSufficient', urlParams)
+}
+
+// 获取营养餐推荐
+const getNutritiousMealService = (params)=>{
+  const urlParams = new URLSearchParams();
+  for(let key in params){
+    urlParams.append(key, params[key]);
+  }
+  // console.log('getNutritiousMealService: ', urlParams.toString())
+  return request.post('/diet/nutritiousMeal', urlParams)
 }
 
 export {
@@ -68,5 +78,6 @@ export {
   getDietFoodsDiaryService,
   uploadDietExerciseDiaryService,
   getDietNutrientIntakeService,
-  getNutrientSufficientService
+  getNutrientSufficientService,
+  getNutritiousMealService
 }

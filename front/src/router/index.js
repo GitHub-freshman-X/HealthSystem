@@ -35,6 +35,9 @@ import NutrientSufficient from '@/views/diet/NutrientSufficient.vue';
 // 运动健康面板
 import ExerciseDietPanel from '@/views/panel/ExerciseDietPanel.vue';
 
+// 营养餐推荐
+import NutritiousMeal from '@/views/diet/NutritiousMeal.vue';
+
 // 定义路由关系
 const routes = [
   {
@@ -43,7 +46,7 @@ const routes = [
   },
   {
     path: '/',
-    redirect: 'health/visualization',
+    redirect: 'panel/exerciseDiet',
     component: Layout,
     children: [
       // 用户
@@ -75,7 +78,10 @@ const routes = [
       { path: 'diet/nutrientSufficient', component: NutrientSufficient },
 
       // 运动健康面板
-      { path: 'panel/exerciseDiet', component: ExerciseDietPanel }
+      { path: 'panel/exerciseDiet', component: ExerciseDietPanel },
+
+      // 营养餐推荐
+      { path: 'nutritiousMeal', component: NutritiousMeal }
     ]
   }
 ]

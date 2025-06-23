@@ -88,4 +88,14 @@ public class DietController {
         return Result.success(result);
     }
 
+    // 推荐营养餐
+    @PostMapping("/nutritiousMeal")
+    public Result<List<NutrientRec>> getNutritiousMeal(
+            @RequestParam String gender,
+            @RequestParam Integer age
+    ){
+        List<NutrientRec> result = dietService.getNutritiousMeal(gender, age);
+        return Result.success(result);
+    }
+
 }

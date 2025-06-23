@@ -60,7 +60,7 @@ import { ref } from 'vue'
 import dayjs from 'dayjs'
 
 const filterForm = ref({
-  date: '2025-06-18'
+  date: ''
 })
 
 // 上面组件已经定死了，我只需要获取数据
@@ -68,19 +68,6 @@ const filterForm = ref({
 import { useHealthInfoStore } from '@/stores/healthInfo'
 const healthInfoStore = useHealthInfoStore()
 
-import {
-  UserFilled,
-  Clock,
-  MagicStick, // 替代 Fire
-  ScaleToOriginal
-} from '@element-plus/icons-vue'
-
-const iconMap = {
-  'el-icon-walk': UserFilled,
-  'el-icon-timer': Clock,
-  'el-icon-fire': MagicStick, // 没有 Fire，使用 MagicStick 替代
-  'el-icon-scale': ScaleToOriginal
-}
 // summaryCard
 const summaryCards = ref([
   { title: '今日步数', value: null, unit: '步', icon: 'el-icon-walk', color: '#36a3f7' },
@@ -114,7 +101,7 @@ const getAllExerciseRecordsByDate = async()=>{
   }
   let result = await getAllExerciseRecordsByDateService(params)
 
-  if(result.data){
+  if(result.data && result.data.length > 0) {
     let totalSteps = 0
     let totalDuration = 0
     let totalCalories = 0
@@ -156,7 +143,7 @@ const getDietCalories = async()=>{
   }
   let result = await getDietCaloriesService(params)
 
-  if(result.data){
+  if(result.data && result.data.length > 0) {
     result.data.forEach(meal=>{
       if(meal.mealType === '早餐') {
         calorieData.value.breakfast = meal.totalCalories
@@ -202,7 +189,7 @@ const getNutrientStandard = async()=>{
   }
 
   let result = await getNutrientSufficientService(params)
-  if(result.data) {
+  if(result.data && result.data.length > 0) {
     nutrientData.value = result.data.map(item=>{
       return {
         name: item.nutrientName,
@@ -211,10 +198,25 @@ const getNutrientStandard = async()=>{
       }
     })
   }
-  console.log('nutrientData', nutrientData.value)
 }
 
 const getNutrientData = async()=>{
+  // 重置数据
+  summaryCards.value[0].value = 0
+  summaryCards.value[1].value = 0
+  summaryCards.value[2].value = 0
+  summaryCards.value[3].value = -calorieData.value.basicMetabolizeRatio
+
+  calorieData.value.breakfast = 0
+  calorieData.value.lunch = 0
+  calorieData.value.dinner = 0
+  calorieData.value.snack = 0
+  calorieData.value.exercise = 0
+
+  nutrientData.value = []
+  exerciseRecords.value = []
+  dietRecords.value = []
+
   await getDietCalories()
   await getAllExerciseRecordsByDate()
   await getNutrientStandard()

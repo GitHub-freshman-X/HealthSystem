@@ -6,6 +6,7 @@ import com.xuchangan.mapper.DietMapper;
 import com.xuchangan.mapper.NutrientMapper;
 import com.xuchangan.pojo.*;
 import com.xuchangan.service.DietService;
+import com.xuchangan.service.NutrientService;
 import com.xuchangan.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -183,6 +184,92 @@ public class DietServiceImpl implements DietService {
         List<NutrientSufficient> standardList = dietMapper.getNutrientSufficient(gender, age, dietDate, pregnancy, lactation);
         return standardList;
     }
+
+    @Override
+    public List<NutrientRec> getNutritiousMeal(String gender, Integer age){
+        List<NutrientSufficient> avg = getAvgDeficiency(gender, age);
+        // 现在我知道了每种营养素的摄入欠缺多少，接下来计算用什么食物补充
+
+        List<NutrientRec> nutrientRecs = new ArrayList<>();
+        for(NutrientSufficient ns : avg){
+            if(ns.getIntakeAmount() >= ns.getRecommendAmount()) {
+                continue; // 如果摄入量已经足够，则跳过
+            }
+
+            String nutrientName = ns.getNutrientName();
+
+            // 获取最富含这种营养素的食物
+            FoodNutrient fn = nutrientMapper.getFoodByNutrient(nutrientName).get(0);
+
+            NutrientRec nr = new NutrientRec();
+            nr.setNutrientName(nutrientName);
+            nr.setFoodName(fn.getFoodName());
+            nr.setRecAmount(ns.getRecommendAmount() / fn.getAmount() / 3 * 100.0); // 直接使用推荐值
+
+            nutrientRecs.add(nr);
+        }
+
+        // 筛选重复食物
+        Map<String, NutrientRec> uniqueRecs = new LinkedHashMap<>();
+        for(NutrientRec nr : nutrientRecs){
+            if(!uniqueRecs.containsKey(nr.getFoodName())) {
+                uniqueRecs.put(nr.getFoodName(), nr);
+            }else{
+                // 如果已经存在，则比较推荐量，保留推荐量更大的
+                NutrientRec existingRec = uniqueRecs.get(nr.getFoodName());
+                if(nr.getRecAmount() > existingRec.getRecAmount()) {
+                    uniqueRecs.put(nr.getFoodName(), nr);
+                }
+            }
+        }
+
+        return uniqueRecs.values().stream().toList();
+    }
+
+    List<NutrientSufficient> getAvgDeficiency(String gender, Integer age){
+        // 我要计算从今天往前一星期的营养素缺失
+        LocalDate today = LocalDate.now();
+        LocalDate startDate = today.minusDays(7);
+        List<NutrientSufficient> avg = new ArrayList<>();
+
+        List<Nutrient> nutrientList = nutrientMapper.list(null);
+        for(Nutrient nutrient: nutrientList){
+            NutrientSufficient ns = new NutrientSufficient();
+            ns.setNutrientName(nutrient.getName());
+            ns.setIntakeAmount(0.0);
+            ns.setRecommendAmount(0.0);
+            avg.add(ns);
+        }
+
+        int count=0;
+        for(LocalDate day = startDate; !day.isAfter(today) || count==0; day = day.plusDays(1)) {
+            List<NutrientSufficient> list = dietMapper.getNutrientSufficient(gender, age, day, "0", "0");
+            if(list == null || list.isEmpty()) {
+                continue; // 如果没有数据，则跳过
+            }
+
+            count++;
+            for(NutrientSufficient ns : list){
+                // 累加每个营养素的摄入量和推荐量
+                for(NutrientSufficient avgNs : avg){
+                    if(avgNs.getNutrientName().equals(ns.getNutrientName())){
+                        avgNs.setIntakeAmount(avgNs.getIntakeAmount() + ns.getIntakeAmount());
+                        avgNs.setRecommendAmount(avgNs.getRecommendAmount() + ns.getRecommendAmount());
+                        break;
+                    }
+                }
+            }
+        }
+
+        // 求平均值
+        for(NutrientSufficient ns : avg){
+            ns.setIntakeAmount(ns.getIntakeAmount() / count);
+            ns.setRecommendAmount(ns.getRecommendAmount() / count);
+        }
+
+        return avg;
+    }
+
 }
 
 

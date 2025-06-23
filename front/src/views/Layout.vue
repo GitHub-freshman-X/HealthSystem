@@ -125,7 +125,7 @@
         </el-menu-item>
 
         <!-- 推荐食物 -->
-        <el-menu-item>
+        <el-menu-item index="/nutritiousMeal">
           <el-icon>
             <Food />
           </el-icon>

@@ -19,4 +19,6 @@ public interface DietService {
     List<NutrientSufficient> getNutrientSufficient(String gender, Integer age, LocalDate dietDate, String pregnancy, String lactation);
 
     List<DietFoodList> getDietCalories(LocalDate dietDate);
+
+    List<NutrientRec> getNutritiousMeal(String gender, Integer age);
 }

@@ -10,12 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NutrientRec {
-    private int recId;
-    private int userId;
-    private LocalDateTime recDate;
-    private int nutrientId;
-    private int foodId;
-    private String recType;
+    private String nutrientName;
+    private String foodName;
     private double recAmount;
-    private String reason;
 }

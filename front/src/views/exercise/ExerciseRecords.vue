@@ -258,6 +258,7 @@ const rules = {
 import { uploadRecordService } from '@/api/Exercise.js'
 import { ElMessage } from 'element-plus';
 const uploadRecord = async()=>{
+  recordModel.value.exerciseDate = dayjs(recordModel.value.exerciseDate).format('YYYY-MM-DD')
   let result = await uploadRecordService(recordModel.value)
   dialogVisible.value = false
   getAllExerciseRecords()

@@ -20,7 +20,12 @@ let chartInstance = null
 
 // 封装一个函数用于设置图表
 const updateChart = () => {
-  if (!chartInstance || !props.data || props.data.length === 0) return
+  if (!chartInstance) return
+
+  if (!props.data || props.data.length === 0) {
+    chartInstance.clear() // 显式清空图表
+    return
+  }
 
   chartInstance.setOption({
     tooltip: { trigger: 'item' },
