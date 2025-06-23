@@ -8,6 +8,7 @@ import com.xuchangan.service.NutrientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -57,5 +58,20 @@ public class NutrientServiceImpl implements NutrientService {
                 .filter(foodNutrient -> foodNutrient.getAmount() > 0)
                 .collect(Collectors.toList());
         return filteredList;
+    }
+
+    @Override
+    public List<FoodNutrient> getNutrientsByFunction(String functionKeyword) {
+        List<String> nutrients = nutrientMapper.getNutrientsByFunction(functionKeyword);
+
+        List<FoodNutrient> resultList = new ArrayList<>();
+        for(String nutrientName: nutrients){
+            List<FoodNutrient> list = nutrientMapper.getFoodByNutrient(nutrientName);
+            if (list != null && !list.isEmpty()) {
+                resultList.addAll(list);
+            }
+        }
+
+        return resultList;
     }
 }

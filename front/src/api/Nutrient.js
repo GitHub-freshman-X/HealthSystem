@@ -54,6 +54,15 @@ const getFoodByNutrientService = (params)=>{
   return request.post('/nutrient/foodByNutrient', urlParams)
 }
 
+// 根据功能查询
+const getNutrientsByFunctionService = (params)=>{
+  let urlParams = new URLSearchParams();
+  for(const key in params) {
+    urlParams.append(key, params[key]);
+  }
+  return request.post('/nutrient/nutrientsByFunction', urlParams)
+}
+
 export {
   getAllNutrientsService,
   addNutrientService,
@@ -61,5 +70,6 @@ export {
   updateNutrientService,
   getSupplyRecommendService,
   getFoodNutrientService,
-  getFoodByNutrientService
+  getFoodByNutrientService,
+  getNutrientsByFunctionService
 }

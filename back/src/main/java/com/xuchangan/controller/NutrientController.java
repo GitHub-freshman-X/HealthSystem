@@ -71,4 +71,13 @@ public class NutrientController {
         return Result.success(result);
     }
 
+    // 根据功能关键词查询营养素
+    @PostMapping("/nutrientsByFunction")
+    public Result<List<FoodNutrient>> getNutrientsByFunction(
+            @RequestParam String functionKeyword
+    ){
+        List<FoodNutrient> result = nutrientService.getNutrientsByFunction(functionKeyword);
+        return Result.success(result);
+    }
+
 }

@@ -24,4 +24,6 @@ public interface NutrientService {
     List<FoodNutrient> getFoodNutrient(String foodName, String nutrientName);
 
     List<FoodNutrient> getFoodByNutrient(String nutrientName);
+
+    List<FoodNutrient> getNutrientsByFunction(String functionKeyword);
 }

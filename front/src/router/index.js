@@ -14,6 +14,7 @@ import AllNutrient from '@/views/nutrient/AllNutrients.vue'
 import NutrientRecommend from '@/views/nutrient/NutrientRecommend.vue';
 import FoodNutrient from '@/views/nutrient/FoodNutrient.vue';
 import FoodByNutrient from '@/views/nutrient/FoodByNutrient.vue';
+import NutrientsByFunction from '@/views/nutrient/NutrientsByFunction.vue';
 
 // 用户健康
 import HealthShow from '@/views/health/HealthShow.vue';
@@ -55,6 +56,7 @@ const routes = [
       { path: 'nutrient/supplyRecommend', component: NutrientRecommend },
       { path: 'nutrient/foodNutrient', component: FoodNutrient },
       { path: 'nutrient/foodByNutrient', component: FoodByNutrient },
+      { path: 'nutrient/nutrientsByFunction', component: NutrientsByFunction },
 
       // 个人健康
       { path: 'health/show', component: HealthShow },

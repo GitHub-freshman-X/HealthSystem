@@ -65,6 +65,10 @@
           <el-menu-item index="/nutrient/foodByNutrient">
             <span>包含指定营养素的食物</span>
           </el-menu-item>
+
+          <el-menu-item index="/nutrient/nutrientsByFunction">
+            <span>根据功能查询</span>
+          </el-menu-item>
         </el-sub-menu>
 
         <!-- 运动板块 -->

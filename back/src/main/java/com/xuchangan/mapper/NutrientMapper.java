@@ -28,4 +28,7 @@ public interface NutrientMapper {
 
     @Select("select * from food_nutrient_view where nutrient_name=#{nutrientName} order by amount desc")
     List<FoodNutrient> getFoodByNutrient(String nutrientName);
+
+    @Select("select nutrient_name as name from nutrient_function_view where function_keywords like CONCAT('%', #{functionKeyword}, '%')")
+    List<String> getNutrientsByFunction(String functionKeyword);
 }
