@@ -55,6 +55,20 @@
           </el-menu-item>
         </el-sub-menu>
 
+        <!-- 食物管理 -->
+        <el-sub-menu index="2">
+          <template #title>
+            <el-icon>
+              <Food />
+            </el-icon>
+            <span>食物、饮食管理</span>
+          </template>
+
+          <el-menu-item index="/admin/diet/foods">
+            <span>食物管理</span>
+          </el-menu-item>
+        </el-sub-menu>
+
         <!-- 个人信息管理 -->
         <el-sub-menu index="6">
           <template #title>

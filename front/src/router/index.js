@@ -42,6 +42,7 @@ import NutritiousMeal from '@/views/diet/NutritiousMeal.vue';
 // 管理员
 import AdminLayout from '@/views/admin/AdminLayout.vue';
 import ManageUsers from '@/views/admin/ManageUsers.vue';
+import ManageFoods from '@/views/admin/ManageFoods.vue';
 
 // 定义路由关系
 const routes = [
@@ -120,10 +121,7 @@ const routes = [
       { path: 'exercise/sumTime', component: SumTime },
 
       // 饮食日记
-      { path: 'diet/show', component: DietShow },
-      { path: 'diet/diary', component: DietExerciseDiary },
-      { path: 'diet/nutrientIntake', component: DietNutrientIntake },
-      { path: 'diet/nutrientSufficient', component: NutrientSufficient },
+      { path: 'diet/foods', component: ManageFoods },
 
       // 运动健康面板
       { path: 'panel/exerciseDiet', component: ExerciseDietPanel },

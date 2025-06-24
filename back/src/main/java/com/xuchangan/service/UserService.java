@@ -1,6 +1,8 @@
 package com.xuchangan.service;
 
 import com.xuchangan.pojo.FamilyRelation;
+import com.xuchangan.pojo.Food;
+import com.xuchangan.pojo.PageBean;
 import com.xuchangan.pojo.User;
 import org.hibernate.validator.constraints.URL;
 
@@ -26,4 +28,5 @@ public interface UserService {
     User findByUserId(Integer memberUserId);
 
     void addFamilyRelation(Integer mainUserId, int memberUserId, String memberUserRole);
+
 }
