@@ -4,7 +4,14 @@
       <div class="header">
         <span>所有营养素</span>
         <div>
-          <el-button type="primary" @click="dialogVisible=true; title='添加营养素'; clearNutrient()">添加营养素</el-button>
+          <el-button 
+            v-if="adminLogging"
+            type="primary" 
+            @click="dialogVisible=true; title='添加营养素'; 
+            clearNutrient()"
+          >
+          添加营养素
+        </el-button>
         </div>
       </div>
     </template>
@@ -28,7 +35,7 @@
       <el-table-column label="功能描述" prop="functionDesc"></el-table-column>
       <el-table-column label="目标功效" prop="targetBenefits"></el-table-column>
 
-      <el-table-column label="操作" width="100">
+      <el-table-column v-if="adminLogging" label="操作" width="100">
         <template #default="{ row }">
           <el-button :icon="Edit" circle plain type="primary" @click="showDialog(row); title='编辑营养素'"></el-button>
           <el-button :icon="Delete" circle plain type="danger" @click="deleteNutrient(row)"></el-button>
@@ -73,7 +80,7 @@
 
 <script setup>
 import { Edit, Delete } from '@element-plus/icons-vue'
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const filterForm = ref({
   nutrientName: ''
@@ -82,6 +89,12 @@ const filterForm = ref({
 const nutrients = ref([]);
 const dialogVisible = ref(false)
 const title = ref('添加营养素');
+
+import { useUserInfoStore } from '@/stores/userInfo';
+const userInfoStore = useUserInfoStore();
+const adminLogging = computed(()=>{
+  return userInfoStore.getUserInfo().username === 'admin'
+})
 
 import { getAllNutrientsService } from '@/api/Nutrient';
 // 获取营养素数据

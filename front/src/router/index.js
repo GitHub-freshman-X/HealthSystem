@@ -39,6 +39,10 @@ import ExerciseDietPanel from '@/views/panel/ExerciseDietPanel.vue';
 // 营养餐推荐
 import NutritiousMeal from '@/views/diet/NutritiousMeal.vue';
 
+// 管理员
+import AdminLayout from '@/views/admin/AdminLayout.vue';
+import ManageUsers from '@/views/admin/ManageUsers.vue';
+
 // 定义路由关系
 const routes = [
   {
@@ -55,6 +59,48 @@ const routes = [
       { path: 'user/avatar', component: UserAvatar },
       { path: 'user/resetPassword', component: UserResetPassword },
       { path: 'user/familyMember', component: FamilyMember },
+
+      // 营养素
+      { path: 'nutrient/all', component: AllNutrient },
+      { path: 'nutrient/supplyRecommend', component: NutrientRecommend },
+      { path: 'nutrient/foodNutrient', component: FoodNutrient },
+      { path: 'nutrient/foodByNutrient', component: FoodByNutrient },
+      { path: 'nutrient/nutrientsByFunction', component: NutrientsByFunction },
+
+      // 个人健康
+      { path: 'health/show', component: HealthShow },
+      { path: 'health/visualization', component: HealthVisualization },
+      { path: 'health/report', component: HealthReport },
+      { path: 'health/compare', component: HealthCompare },
+
+      // 运动记录
+      { path: 'exercise/records', component: ExerciseRecords },
+      { path: 'exercise/sumTime', component: SumTime },
+
+      // 饮食日记
+      { path: 'diet/show', component: DietShow },
+      { path: 'diet/diary', component: DietExerciseDiary },
+      { path: 'diet/nutrientIntake', component: DietNutrientIntake },
+      { path: 'diet/nutrientSufficient', component: NutrientSufficient },
+
+      // 运动健康面板
+      { path: 'panel/exerciseDiet', component: ExerciseDietPanel },
+
+      // 营养餐推荐
+      { path: 'nutritiousMeal', component: NutritiousMeal }
+    ]
+  },
+  {
+    path: '/admin',
+    component: AdminLayout,
+    children: [
+      // 管理员账号
+      { path: 'user/info', component: UserInfo },
+      { path: 'user/avatar', component: UserAvatar },
+      { path: 'user/resetPassword', component: UserResetPassword },
+
+      // 账号管理
+      { path: 'users/ManageUsers', component: ManageUsers },
 
       // 营养素
       { path: 'nutrient/all', component: AllNutrient },

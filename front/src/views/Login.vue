@@ -131,8 +131,16 @@ const login = async()=>{
   // 登陆错误已经在request.js中处理了
   tokenStore.setToken(result.data)
   getUserInfo();
+
+  if(loginData.value.username === 'admin'){
+    // 如果是管理员，跳转到管理员页面
+    router.push('/admin');
+  } else {
+    // 普通用户跳转到用户主页
+    router.push('/');
+  }
+
   ElMessage.success('登录成功');
-  router.push('/')
 }
 
 const register = ()=>{
