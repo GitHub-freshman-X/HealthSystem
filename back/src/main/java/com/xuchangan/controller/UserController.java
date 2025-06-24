@@ -91,6 +91,16 @@ public class UserController {
         return Result.success();
     }
 
+    // 修改密码
+    @PatchMapping("/updatePassword")
+    public Result<String> updatePassword(
+            @RequestParam String oldPassword,
+            @RequestParam String newPassword
+    ){
+        String str =  userService.updatePassword(oldPassword, newPassword);
+        return Result.success(str);
+    }
+
 
     // -------------------------- 测试基本函数，不是对外接口 --------------------------
     @PostMapping("/findByUsername")

@@ -40,4 +40,23 @@ public class UserServiceImpl implements UserService {
         Integer id = (Integer) map.get("id");
         userMapper.uploadAvatar(id, avatarUrl);
     }
+
+    @Override
+    public String updatePassword(String oldPassword, String newPassword) {
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer userId = (Integer) map.get("id");
+
+        User user = userMapper.findByUserId(userId);
+        String oldMd5Password = user.getPassword();
+        String chkOldPassword = Md5Util.getMD5String(oldPassword);
+        if(!oldMd5Password.equals(chkOldPassword)) {
+            return "旧密码错误";
+        }
+
+        // 加密
+        String md5String = Md5Util.getMD5String(newPassword);
+
+        userMapper.updatePassword(userId, md5String);
+        return "密码更新成功";
+    }
 }

@@ -15,4 +15,6 @@ public interface UserService {
 
     // 上传头像
     void uploadAvatar(@URL String avatarUrl);
+
+    String updatePassword(String oldPassword, String newPassword);
 }

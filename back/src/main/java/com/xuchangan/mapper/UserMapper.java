@@ -12,6 +12,9 @@ public interface UserMapper {
     @Select("select * from user where username=#{username}")
     User findByUsername(String username);
 
+    @Select("select * from user where user_id=#{userId}")
+    User findByUserId(Integer userId);
+
     @Insert("insert into user(username, password) values(#{username}, #{md5String})")
     void register(String username, String md5String);
 
@@ -20,4 +23,7 @@ public interface UserMapper {
 
     @Update("update user set avatar_url=#{avatarUrl} where user_id=#{id}")
     void uploadAvatar(Integer id, String avatarUrl);
+
+    @Update("update user set password=#{md5String} where user_id=#{userId}")
+    void updatePassword(Integer userId, String md5String);
 }

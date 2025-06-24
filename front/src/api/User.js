@@ -28,10 +28,19 @@ const uploadAvatarService = (avatarFile)=>{
   return request.patch('/user/uploadAvatar', params)
 }
 
+// 修改密码
+const updatePasswordService = (oldPassword, newPassword)=>{
+  const params = new URLSearchParams()
+  params.append('oldPassword', oldPassword);
+  params.append('newPassword', newPassword);
+  return request.patch('/user/updatePassword', params)
+}
+
 export {
   userLoginService,
   userRegisterService,
   getUserInfoService,
   updateUserInfoService,
-  uploadAvatarService
+  uploadAvatarService,
+  updatePasswordService
 }
