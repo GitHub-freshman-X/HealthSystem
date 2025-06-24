@@ -1,6 +1,7 @@
 package com.xuchangan.service.impl;
 
 import com.xuchangan.mapper.UserMapper;
+import com.xuchangan.pojo.FamilyRelation;
 import com.xuchangan.pojo.User;
 import com.xuchangan.service.UserService;
 import com.xuchangan.utils.Md5Util;
@@ -8,6 +9,7 @@ import com.xuchangan.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -58,5 +60,23 @@ public class UserServiceImpl implements UserService {
 
         userMapper.updatePassword(userId, md5String);
         return "密码更新成功";
+    }
+
+    @Override
+    public List<FamilyRelation> getFamilyMembers() {
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer userId = (Integer) map.get("id");
+        List<FamilyRelation> familyRelations = userMapper.getFamilyMembers(userId);
+        return familyRelations;
+    }
+
+    @Override
+    public User findByUserId(Integer memberUserId) {
+        return userMapper.findByUserId(memberUserId);
+    }
+
+    @Override
+    public void addFamilyRelation(Integer mainUserId, int memberUserId, String memberUserRole) {
+        userMapper.addFamilyRelation(mainUserId, memberUserId, memberUserRole);
     }
 }

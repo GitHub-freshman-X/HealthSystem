@@ -28,7 +28,6 @@ public class User {
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate birthDate;
     private double height;
-    private String familyRole;
 
     private String avatarUrl;
 

@@ -1,5 +1,6 @@
 package com.xuchangan.controller;
 
+import com.xuchangan.pojo.FamilyRelation;
 import com.xuchangan.pojo.Result;
 import com.xuchangan.pojo.User;
 import com.xuchangan.service.UserService;
@@ -14,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -40,6 +42,21 @@ public class UserController {
         return Result.success();
     }
 
+    // 生成jwt令牌
+    private String generateJwt(User user){
+        // 生成jwt令牌
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("id", user.getUserId());
+        claims.put("username", user.getUsername());
+        String jwtToken = JwtUtil.genToken(claims);
+
+        // 将token存入到redis中
+        ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
+        operations.set(jwtToken, jwtToken, 1, TimeUnit.HOURS);
+
+        return jwtToken;
+    }
+
     // 登录
     @PostMapping("/login")
     public Result login(@RequestBody @Validated(User.Add.class) User loginUser) {
@@ -55,15 +72,19 @@ public class UserController {
             return Result.error("密码错误");
         }
 
-        // 生成jwt令牌
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("id", user.getUserId());
-        claims.put("username", user.getUsername());
-        String jwtToken = JwtUtil.genToken(claims);
+        // jwt
+        String jwtToken = generateJwt(user);
 
-        // 将token存入到redis中
-        ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
-        operations.set(jwtToken, jwtToken, 1, TimeUnit.HOURS);
+        return Result.success(jwtToken);
+    }
+
+    @PostMapping("/switchLogin")
+    public Result switchLogin(@RequestParam String memberUserId){
+        // 通过用户ID查找用户
+        User user = userService.findByUserId(Integer.parseInt(memberUserId));
+
+        // jwt
+        String jwtToken = generateJwt(user);
 
         return Result.success(jwtToken);
     }
@@ -99,6 +120,30 @@ public class UserController {
     ){
         String str =  userService.updatePassword(oldPassword, newPassword);
         return Result.success(str);
+    }
+
+    // 获取所有家庭成员
+    @GetMapping("/familyMembers")
+    public Result<List<FamilyRelation>> getFamilyMembers(){
+        List<FamilyRelation> result = userService.getFamilyMembers();
+        return Result.success(result);
+    }
+
+    // 添加家庭成员
+    @PostMapping("/registerFamilyMember")
+    public Result registerFamilyMember(
+            @RequestParam String username,
+            @RequestParam String password,
+            @RequestParam String memberUserRole
+    ){
+        userService.register(username, password);
+        User user = userService.findByUsername(username);
+
+        Map<String,Object> map = ThreadLocalUtil.get();
+        Integer userId = (Integer)map.get("id");
+
+        userService.addFamilyRelation(userId, user.getUserId(), memberUserRole);
+        return Result.success();
     }
 
 

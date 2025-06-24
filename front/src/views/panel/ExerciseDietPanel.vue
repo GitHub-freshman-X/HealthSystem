@@ -101,10 +101,10 @@ const getAllExerciseRecordsByDate = async()=>{
   }
   let result = await getAllExerciseRecordsByDateService(params)
 
+  let totalCalories = 0
   if(result.data && result.data.length > 0) {
     let totalSteps = 0
     let totalDuration = 0
-    let totalCalories = 0
 
     result.data.forEach(record=>{
       totalSteps += record.steps
@@ -119,10 +119,6 @@ const getAllExerciseRecordsByDate = async()=>{
     // caloriesData中的运动消耗
     calorieData.value.exercise = totalCalories
 
-    // TODO：净热量差
-    summaryCards.value[3].value =(calorieData.value.breakfast + calorieData.value.lunch + calorieData.value.dinner + calorieData.value.snack)
-                                 - (totalCalories + calorieData.value.basicMetabolizeRatio)
-
     // 记录exerciseRecord
     exerciseRecords.value = result.data.map(record => ({
       type: record.exerciseType,
@@ -130,6 +126,10 @@ const getAllExerciseRecordsByDate = async()=>{
       calories: record.calorieBurned,
     }))
   }
+  // TODO：净热量差
+  summaryCards.value[3].value =(calorieData.value.breakfast + calorieData.value.lunch + calorieData.value.dinner + calorieData.value.snack)
+                                - (totalCalories + calorieData.value.basicMetabolizeRatio)
+
 }
 
 // 摄入的卡路里，摄入与运动作差才有净热量差

@@ -8,6 +8,7 @@ import Layout from '@/views/Layout.vue'
 import UserInfo from '@/views/user/UserInfo.vue'
 import UserAvatar from '@/views/user/UserAvatar.vue'
 import UserResetPassword from '@/views/user/UserResetPassword.vue'
+import FamilyMember from '@/views/user/FamilyMember.vue';
 
 // 营养素
 import AllNutrient from '@/views/nutrient/AllNutrients.vue'
@@ -46,13 +47,14 @@ const routes = [
   },
   {
     path: '/',
-    redirect: 'panel/exerciseDiet',
+    redirect: 'health/show',
     component: Layout,
     children: [
       // 用户
       { path: 'user/info', component: UserInfo },
       { path: 'user/avatar', component: UserAvatar },
       { path: 'user/resetPassword', component: UserResetPassword },
+      { path: 'user/familyMember', component: FamilyMember },
 
       // 营养素
       { path: 'nutrient/all', component: AllNutrient },

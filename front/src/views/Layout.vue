@@ -161,6 +161,12 @@
             </el-icon>
             <span>重置密码</span>
           </el-menu-item>
+
+          <el-menu-item index="/user/familyMember">
+            <el-icon>
+            </el-icon>
+            <span>家庭成员</span>
+          </el-menu-item>
         </el-sub-menu>
 
       </el-menu>
@@ -218,7 +224,7 @@ import {
   Flag,
   Notebook,
   PieChart,
-  Food
+  Food,
 } from '@element-plus/icons-vue'
 import avatar from '@/assets/default.png'
 
@@ -228,6 +234,8 @@ import { useTokenStore } from '@/stores/token.js';
 const tokenStore = useTokenStore();
 import { useRouter } from 'vue-router';
 const router = useRouter();
+import { useHealthInfoStore } from '@/stores/healthInfo';
+const healthInfoStore = useHealthInfoStore();
 import { ElMessage, ElMessageBox } from 'element-plus';
 
 const handleCommand = (command)=>{
@@ -245,6 +253,7 @@ const handleCommand = (command)=>{
         // 清除用户信息
         userInfoStore.clearUserInfo()
         tokenStore.clearToken()
+        healthInfoStore.clearHealthInfo()
         router.push('/login') // 路由到登录页面
         ElMessage.success('退出登录成功');
       })

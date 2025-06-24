@@ -11,5 +11,6 @@ public class FamilyRelation {
     private int relationId;
     private int mainUserId;
     private int memberUserId;
-    private String relationType;
+    private String memberUserName;
+    private String memberUserRole;
 }

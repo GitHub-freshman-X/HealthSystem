@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuchangan.mapper.UserMapper">
+    <select id="getFamilyMembers" resultType="com.xuchangan.pojo.FamilyRelation">
+        SELECT
+            fr.member_user_id as member_user_id,
+            fr.member_user_role AS member_user_role,
+            u.real_name AS member_user_name
+        FROM
+            family_relation fr
+                JOIN
+            user u ON fr.member_user_id = u.user_id
+        where fr.main_user_id = #{userId};
+    </select>
+</mapper>

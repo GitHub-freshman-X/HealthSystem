@@ -1,7 +1,10 @@
 package com.xuchangan.service;
 
+import com.xuchangan.pojo.FamilyRelation;
 import com.xuchangan.pojo.User;
 import org.hibernate.validator.constraints.URL;
+
+import java.util.List;
 
 public interface UserService {
     // 通过用户名查找用户
@@ -17,4 +20,10 @@ public interface UserService {
     void uploadAvatar(@URL String avatarUrl);
 
     String updatePassword(String oldPassword, String newPassword);
+
+    List<FamilyRelation> getFamilyMembers();
+
+    User findByUserId(Integer memberUserId);
+
+    void addFamilyRelation(Integer mainUserId, int memberUserId, String memberUserRole);
 }

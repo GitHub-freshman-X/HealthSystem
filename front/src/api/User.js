@@ -36,11 +36,36 @@ const updatePasswordService = (oldPassword, newPassword)=>{
   return request.patch('/user/updatePassword', params)
 }
 
+// 查家庭成员
+const getFamilyMembersService = ()=>{
+  return request.get('/user/familyMembers')
+}
+
+// 登录家庭成员给账号
+const switchLoginService = (memberUserId)=>{
+  const params = new URLSearchParams()
+  params.append('memberUserId', memberUserId);
+  console.log('switchLoginService', params.toString())
+  return request.post('/user/switchLogin', params)
+}
+
+// 注册家庭成员
+const registerFamilyMember = (registerData)=>{
+  const params = new URLSearchParams();
+  params.append('username', registerData.value.username);
+  params.append('password', registerData.value.password);
+  params.append('memberUserRole', registerData.value.memberUserRole);
+  return request.post('/user/registerFamilyMember', params);
+}
+
 export {
   userLoginService,
   userRegisterService,
   getUserInfoService,
   updateUserInfoService,
   uploadAvatarService,
-  updatePasswordService
+  updatePasswordService,
+  getFamilyMembersService,
+  switchLoginService,
+  registerFamilyMember
 }

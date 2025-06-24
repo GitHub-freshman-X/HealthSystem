@@ -1,10 +1,13 @@
 package com.xuchangan.mapper;
 
+import com.xuchangan.pojo.FamilyRelation;
 import com.xuchangan.pojo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+
+import java.util.List;
 
 @Mapper
 public interface UserMapper {
@@ -26,4 +29,9 @@ public interface UserMapper {
 
     @Update("update user set password=#{md5String} where user_id=#{userId}")
     void updatePassword(Integer userId, String md5String);
+
+    List<FamilyRelation> getFamilyMembers(Integer userId);
+
+    @Insert("insert into family_relation(main_user_id, member_user_id, member_user_role) values(#{mainUserId}, #{memberUserId}, #{memberUserRole})")
+    void addFamilyRelation(Integer mainUserId, int memberUserId, String memberUserRole);
 }
